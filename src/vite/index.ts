@@ -1,24 +1,23 @@
 import { Plugin, ViteDevServer } from "vite"
-import { markdownComplier } from "./compilerMd"
-
-function parseId(id: string) {
-  const index = id.indexOf("?")
-  if (index < 0)
-    return id
-
-  else
-    return id.slice(0, index)
-}
+import { createMarkdonwToVueRenderFn } from "./md2vue"
 
 export interface Options {
   devServer?: ViteDevServer;
 }
 
-export default function createVueMarkDownPlugin(): Plugin {
+function parseId(id: string) {
+  const index = id.indexOf("?")
+  if (index < 0)
+    return id
+  else
+    return id.slice(0, index)
+}
+
+export default function createVueMarkDownPlugin(root: string): Plugin {
   let options: Options = {
     devServer: undefined
   }
-    
+      
   return {
     name: "vite-loader-md",
     configureServer(server) {
@@ -31,9 +30,14 @@ export default function createVueMarkDownPlugin(): Plugin {
       if (!path.endsWith(".md")){
         return raw
       }
-      const vueComponent = markdownComplier(path, options)
-      return vueComponent
+      const render = createMarkdonwToVueRenderFn(root, {
+        lineNumbers: true
+      })
 
+      //   const content = render(path, )
+      
+      return "renderer(path)"
     },
   }
 }
+  

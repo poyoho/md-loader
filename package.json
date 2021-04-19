@@ -1,5 +1,5 @@
 {
-  "name": "vite-loader-md",
+  "name": "@poyoho/loader-md",
   "author": "poyoho",
   "version": "0.0.1",
   "description": "vite插件 markdown解析器",
@@ -9,12 +9,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/poyoho/vite-loader-md.git"
+    "url": "git+https://github.com/poyoho/loader-md.git"
   },
   "bugs": {
-    "url": "https://github.com/poyoho/vite-loader-md/issues"
+    "url": "https://github.com/poyoho/loader-md/issues"
   },
-  "homepage": "https://github.com/poyoho/vite-loader-md/blob/master/README.md",
+  "homepage": "https://github.com/poyoho/loader-md/blob/master/README.md",
   "scripts": {
     "wbuild": "tsc -w .",
     "build": "rimraf dist && tsc -p .",
@@ -32,11 +32,9 @@
     }
   },
   "dependencies": {
+    "@poyoho/compile-md": "^0.0.2",
     "@vue/compiler-sfc": "^3.0.5",
-    "fs-extra": "^9.0.1",
-    "highlight.js": "^10.4.1",
-    "markdown-it": "^12.0.3",
-    "markdown-it-container": "^3.0.0"
+    "fs-extra": "^9.0.1"
   },
   "peerDependencies": {},
   "devDependencies": {
