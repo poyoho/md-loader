@@ -24,7 +24,7 @@ export function DemoContainer(md: MarkdownIt) {
   })
 }
 
-export function createMarkdonwToVueRenderFn (
+export function createMarkdonw2HtmlRenderFn (
   root: string,
   options: MarkdownOptions = {},
 ) {
@@ -32,5 +32,8 @@ export function createMarkdonwToVueRenderFn (
 
   md.use(DemoContainer)
 
-  return md
+  return {
+    __data: md.__data,
+    render: md.render,
+  }
 }

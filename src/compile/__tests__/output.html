@@ -1,0 +1,99 @@
+<h1 id="h1"><a class="header-anchor" href="#h1" aria-hidden="true">#</a> h1</h1>
+<h2 id="h2"><a class="header-anchor" href="#h2" aria-hidden="true">#</a> h2</h2>
+<h3 id="h3"><a class="header-anchor" href="#h3" aria-hidden="true">#</a> h3</h3>
+<p>💯</p>
+<template #highlight><div class="language-js line-numbers-mode"><pre v-pre><code><span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token number">10</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+</code></pre>
+</div></template><div class="tip custom-block"><p class="custom-block-title">TIP</p>
+<p>hello tip container</p>
+</div>
+<p><div class="table-of-contents"><ul><li><a href="#h2">h2</a><ul><li><a href="#h3">h3</a></li></ul></li></ul></div></p>
+<demo-block>
+
+        <!--element-demo: <template>
+  <div ref="listWrap" class="list-wrap">
+    <h2 v-for="item in state.data" :key="item">{{ item }}</h2>
+  </div>
+  <div v-if="loading" class="loading">正在加载...</div>
+</template>
+<script>
+import { defineComponent, ref, reactive} from "vue"
+import { useScrollLoading } from "@ui/hooks"
+export default defineComponent ({
+  setup() {
+    const state = reactive({
+      data: [],
+    })
+    const fakeReq = () => {
+      // 使用闭包可以有效控制请求是否生效
+      let i = 0;
+      return () => new Promise(resolve => {
+        setTimeout(() => {
+          resolve(Array(10).fill(++i));
+        }, 1000);
+      });
+    }
+    const req = fakeReq()
+    const listWrap = ref(null);
+    const loading = useScrollLoading(listWrap, state.data, req)
+    return {
+      state,
+      listWrap,
+      loading
+    }
+  }
+})
+</script>
+<style>
+.list-wrap{
+  height: 300px;
+  overflow-y: scroll;
+}
+</style>
+ :element-demo-->
+        <template #highlight><div class="language-html line-numbers-mode"><pre v-pre><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>listWrap<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>list-wrap<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>     
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span> <span class="token attr-name">v-for</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>item in state.data<span class="token punctuation">"</span></span> <span class="token attr-name">:key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>{{ item }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>loading<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>loading<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>正在加 
+载...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">import</span> <span class="token punctuation">{</span> defineComponent<span class="token punctuation">,</span> ref<span class="token punctuation">,</span> reactive<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"vue"</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> useScrollLoading <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@ui/hooks"</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token function">defineComponent</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token function">reactive</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      data<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">fakeReq</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token comment">// 使用闭包可以有效控制请求是否生效</span>
+      <span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+          <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token function">Array</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span 
+class="token function">fill</span><span class="token punctuation">(</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">const</span> req <span class="token operator">=</span> <span class="token function">fakeReq</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> listWrap <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      
+    <span class="token keyword">const</span> loading <span class="token operator">=</span> <span class="token function">useScrollLoading</span><span class="token punctuation">(</span>listWrap<span class="token punctuation">,</span> state<span class="token punctuation">.</span>data<span class="token punctuation">,</span> req<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      state<span class="token punctuation">,</span>
+      listWrap<span class="token punctuation">,</span>
+      loading
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
+<span class="token selector">.list-wrap</span><span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 300px<span class="token punctuation">;</span>
+  <span class="token property">overflow-y</span><span class="token punctuation">:</span> scroll<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+</code></pre>
+</div></template></demo-block><p><a href="/p/a/t/h.html?query=string#hash">内部</a>
+<a href="https://www.baidu.com" target="_blank" rel="noopener noreferrer">外部</a></p>
