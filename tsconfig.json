@@ -8,8 +8,6 @@
     "removeComments": true,
     "esModuleInterop": true,
     "sourceMap": false,
-    "strict": true,
-    "noUnusedLocals": true,
     "jsx": "preserve",
     "target": "es2019",
     "lib": [

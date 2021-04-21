@@ -10,16 +10,8 @@ module.exports = {
       2,
       "always",
       [
-        "api",
-        "components",
-        "global",
-        "hooks",
-        "lang",
-        "router",
-        "store",
-        "utils",
-        "styles",
-        "views",
+        "compile",
+        "plugin",
         "package.json"
       ],
     ],

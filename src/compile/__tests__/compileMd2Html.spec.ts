@@ -15,7 +15,7 @@ describe("markdow-compiler", () => {
     const content = fs.readFileSync(path.join(__dirname, "./test.md"), {encoding: "utf-8"})
     const result = fs.readFileSync(path.join(__dirname, "./output.html"), {encoding: "utf-8"})
     const res = render.render(content)
-    // console.log(res.html);
+    // fs.writeFileSync(path.join(__dirname, "./output.html"), res.html, {encoding: "utf-8"})
     expect(equal(res.html, result)).toBe(true)
   })
 })

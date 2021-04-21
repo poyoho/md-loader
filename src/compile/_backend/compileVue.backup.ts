@@ -80,20 +80,6 @@ function rewriteImports(imports: imports["imports"]) {
   }).join("\n")
 }
 
-
-function pad(source: string) {
-  return source
-    .split(/\r?\n/)
-    .map(line => `  ${line}`)
-    .join("\n")
-}
-
-/**
- * template正则式
- */
-const templateReplaceRegex = /<template>([\s\S]+)<\/template>/g
-
-
 function _compileStyle(
   path: string,
   opts: Options,
@@ -133,31 +119,12 @@ function _compileStyle(
 }
 
 function _compileTemplate(path: string, source: string) {
-  // https://github.com/vuejs/vue-loader/blob/423b8341ab368c2117931e909e2da9af74503635/lib/loaders/templateLoader.js#L46
-  if (templateReplaceRegex.test(source)) {
-    source = source.replace(templateReplaceRegex, "$1")
-  }
   const compiled = compileTemplate({
     source: source,
     filename: path,
     id: path,
     transformAssetUrls: false,
   })
-  
-  // tips
-  if (compiled.tips && compiled.tips.length) {
-    compiled.tips.forEach(tip => {
-      console.warn(tip)
-    })
-  }
-  // errors
-  if (compiled.errors && compiled.errors.length) {
-    console.error(
-      `\n  Error compiling template:\n${pad(compiled.source)}\n` +
-        compiled.errors.map(e => `  - ${e}`).join("\n") +
-        "\n",
-    )
-  }
 
   let template = compiled.code.replace("export function render", "function render")
   return template

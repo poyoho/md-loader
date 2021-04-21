@@ -7,6 +7,6 @@ describe("html-vue-compiler", () => {
     const render = createHtml2VueRenderFn()
     const input = fs.readFileSync(path.join(__dirname, "./output.html"), {encoding: "utf-8"})
     // const output = fs.readFileSync(path.join(__dirname, "./test.md"), {encoding: "utf-8"})
-    render(input, {})
+    render(input, "asdasd")
   })
 })
