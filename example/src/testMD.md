@@ -4,120 +4,67 @@
 
 # 1
 
-:::demo 测试备注
-
+::: demo
 ```html
 <template>
-    <div class="abc">123</div>
-    <h1>789</h1>
-    {{ state }}
-    <button @click="click">click</button>
+  <p>hello world</p>
+  <button @click="() => count++">{{count}}</button>
 </template>
 <script>
-import { defineComponent, reactive } from "vue"
+import { defineComponent, ref } from "vue"
 export default defineComponent({
-  setup(){
-      const state = reactive({
-          count: 0
-      })
-
-      const click = () => {
-          state.count++;
-      }
-
-      return {
-          state,
-          click
-      }
+  setup () {
+    const count = ref(0)
+    return {
+      count
+    }
   }
 })
 </script>
-<style>
-    .abc{
-        color: red;
-    }
-</style>
 ```
 :::
 
 # 2
 
-:::demo 测试备注2
-
+::: demo
 ```html
 <template>
-    <div class="abc">456</div>
-    <h1>456</h1>
-    {{ state }}
-    <button @click="click">click</button>
+  <p>hello world</p>
+  <button @click="() => count++">{{count}}</button>
 </template>
 <script>
-import { defineComponent, reactive } from "vue"
+import { defineComponent, ref } from "vue"
 export default defineComponent({
-  setup(){
-      const state = reactive({
-          count: 0
-      })
-
-      const click = () => {
-          state.count++;
-      }
-
-      return {
-          state,
-          click
-      }
+  setup () {
+    const count = ref(0)
+    return {
+      count
+    }
   }
 })
 </script>
-<style>
-    .abc{
-        color: green;
-    }
-</style>
 ```
 :::
 
 # 3
 
-:::demo 测试备注3
-
+::: demo
 ```html
 <template>
-    <div class="abc">
-        789
-        <h1>123</h1>
-    </div>
-    {{ state }}
-    <button @click="click">click</button>
+  <p>hello world</p>
+  <button @click="() => count++">{{count}}</button>
 </template>
-<script>
-import { defineComponent, reactive } from "vue"
+<script lang="ts">
+import { defineComponent, ref } from "vue"
 export default defineComponent({
-  setup(){
-      const state = reactive({
-          count: 0
-      })
-
-      const click = () => {
-          state.count++;
-      }
-
-      return {
-          state,
-          click
-      }
+  setup () {
+    const count = ref<number>(0)
+    return {
+      count
+    }
   }
 })
 </script>
-<style lang="less">
-    .abc {
-        color: #0088ff;
-        h1 {
-            color: red;
-        }
-    }
-</style>
 ```
 :::
 
@@ -147,27 +94,6 @@ __hello__
 ASDASD
 
 ### 自定义显示内容
-:::demo 备注测试 vscdoe
-
-```html
-<template>
-  <div class="hello-wrap">
-    hello world vscode {{ input }} {{state.a}}
-  </div>
-</template>
-<script>
-import { defineComponent, ref, reactive} from 'vue'
-export default defineComponent ({
-  setup() {
-    const state = reactive({
-      a: 1
-    })
-    return {
-      input: ref('666'),
-      state
-    }
-  }
-})
-</script>
-```
+:::tip
+hello world
 :::

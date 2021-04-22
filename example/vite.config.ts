@@ -1,23 +1,16 @@
 import { UserConfig } from "vite"
-import { resolve } from "path"
-import vueMd from "../lib"
-import vuePlugins from "@vitejs/plugin-vue"
-
-function pathResolve(dir: string) {
-  return resolve(__dirname, dir)
-}
+import path from "path"
+import vueMd from "../src/vite"
 
 const viteConfig: UserConfig = {
-  alias: {
-    "@": pathResolve("./src/"),
-  },
   plugins: [
-    vuePlugins(),
     vueMd(),
   ],
-  optimizeDeps: {
-    include: ["highlight.js"],
-  },
+  resolve: {
+    alias: {
+      "@": path.resolve("./src"),
+    }
+  }
 }
 
 export default viteConfig

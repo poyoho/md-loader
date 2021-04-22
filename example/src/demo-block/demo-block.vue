@@ -5,10 +5,6 @@
     @mouseenter="hovering = true"
     @mouseleave="hovering = false"
   >
-    <!-- 代码生成的ui -->
-    <div class="source">
-      <slot name="source"></slot>
-    </div>
     <!-- 源码区 -->
     <div
       ref="meta"
@@ -50,14 +46,8 @@ import {
   computed,
   ref,
   watchEffect,
-  onMounted,
-  nextTick,
 } from "vue";
-import hljs from "highlight.js";
 import useRefTemplate from "./useRefTemplate";
-
-import "./demo-block.less"
-
 
 export default defineComponent({
   name: "DemoBlock",
@@ -92,18 +82,6 @@ export default defineComponent({
       } else {
         return "1px";
       }
-    });
-    onMounted(() => {
-      state.isMounted = true;
-      nextTick(() => {
-        try {
-          const hlEl = useRefTemplate<HTMLElement>(highlight) as HTMLElement;
-          const code = hlEl.querySelector("code") as HTMLElement;
-          hljs.highlightBlock(code);
-        } catch (error) {
-          console.log(error);
-        }
-      });
     });
     watchEffect(() => {
       if (state.isMounted) {

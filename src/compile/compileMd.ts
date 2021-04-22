@@ -24,7 +24,7 @@ export function DemoContainer(md: MarkdownIt) {
   })
 }
 
-export function createMarkdonw2HtmlRenderFn (
+export function createMarkdonwRenderFn (
   root: string,
   options: MarkdownOptions = {},
 ) {

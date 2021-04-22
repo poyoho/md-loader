@@ -1,43 +1,35 @@
-import { Plugin, ViteDevServer } from "vite"
-import { createMarkdonwToVueRenderFn } from "./md2vue"
+import { Plugin } from "vite"
+import { parseRequest } from "./query"
+import { createMarkdonwRenderFn } from "../compile/compileMd"
+import { createHtml2VueRenderFn } from "../compile/compileHtml"
+import createVuePlugin from "@vitejs/plugin-vue"
 
-export interface Options {
-  devServer?: ViteDevServer;
-}
+export default function createVueMarkDownPlugin() {
+  const md = createMarkdonwRenderFn(__dirname)
+  const template = createHtml2VueRenderFn()
 
-function parseId(id: string) {
-  const index = id.indexOf("?")
-  if (index < 0)
-    return id
-  else
-    return id.slice(0, index)
-}
+  const vuePlugin = createVuePlugin({
+    include: [/\.vue$/, /\.md$/],
+  })
 
-export default function createVueMarkDownPlugin(root: string): Plugin {
-  let options: Options = {
-    devServer: undefined
-  }
-      
-  return {
-    name: "vite-loader-md",
-    configureServer(server) {
-      if(server) {
-        options.devServer = server
+  const mdPlugin: Plugin = {
+    name: "loader-md",
+
+    transform (code, id) {
+      const { filename, query } = parseRequest(id)
+      if (!query.component && !/\.md$/.test(id)) {
+        return
+      }
+      if (!query.component) {
+        console.log("transform");
+        const html = md.render(code)
+        const vue = template.render(html.html, filename)
+        return vue
+      } else {
+        return template.component(filename, query.component)
       }
     },
-    transform(raw, id) {
-      const path = parseId(id)
-      if (!path.endsWith(".md")){
-        return raw
-      }
-      const render = createMarkdonwToVueRenderFn(root, {
-        lineNumbers: true
-      })
-
-      //   const content = render(path, )
-      
-      return "renderer(path)"
-    },
   }
+
+  return [mdPlugin, vuePlugin]
 }
-  
