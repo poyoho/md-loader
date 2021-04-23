@@ -30,8 +30,8 @@ export default function createVueMarkDownPlugin() {
       if (!query.component && !/\.md$/.test(filename)) {
         return
       }
-      // console.log("transform", id);
       if (!query.component) {
+        // console.log("transform", filename, query, id);
         const html = md.render(code)
         const vue = template.render(html.html, filename)
         return vue
@@ -40,19 +40,21 @@ export default function createVueMarkDownPlugin() {
 
     // sub-part requests (*.component.) as virtual modules
     resolveId(id) {
-      if (parseRequest(id).query.component) {
-        // console.log("resolveId", parseRequest(id))
+      const { filename, query } = parseRequest(id)
+      // console.log("resolveId", id, filename)
+      if (query.component && !query.vue) { // pass query vue
         return id
       }
     },
 
     // load virtual modules
     load (id) {
+      // console.log("load", id);
       const { filename, query } = parseRequest(id)
-      if (query.component) {
+      if (query.component && !query.vue) { // pass query vue
         // because there is no real file, add use the config root path
         const virtualPath = slash(filename.includes(root) ? filename : path.join(root, filename))
-        // console.log("load", virtualPath);
+        // console.log("load", virtualPath, query);
         return template.component(virtualPath, query.component)
       }
     },

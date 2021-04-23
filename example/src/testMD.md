@@ -4,7 +4,7 @@ asdsad
 ::: demo
 ```html
 <template>
-  <p>hello world</p>
+  <p class="hello-wrap">hello world</p>
   <button @click="() => count++">{{count}}</button>
 </template>
 <script>
@@ -19,6 +19,12 @@ export default defineComponent({
   }
 })
 </script>
+<style>
+  .hello-wrap {
+    font-size: 20px;
+    color: red;
+  }
+</style>
 ```
 :::
 

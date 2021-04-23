@@ -1,6 +1,6 @@
 import { UserConfig } from "vite"
 import path from "path"
-import vueMd from "../dist"
+import vueMd from "../src"
 
 const viteConfig: UserConfig = {
   plugins: [

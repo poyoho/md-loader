@@ -6,7 +6,7 @@ export function createHtml2VueRenderFn () {
   return {
     render: (html: string, filename: string) => {
       let count = 0
-      const imports = []
+      const imports: string[] = []
       const components = new Map<string, string>();
       const template = html.replace(componentRE, (_, s) => {
         count++
@@ -31,7 +31,7 @@ export function createHtml2VueRenderFn () {
       return vuePage
     },
     component: (filename: string, componentName: string) => {
-      return cache.get(filename).get(componentName)
+      return cache.get(filename)!.get(componentName)
     }
   }
 }
