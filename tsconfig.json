@@ -2,21 +2,24 @@
   "compilerOptions": {
     "outDir": "dist",
     "baseUrl": ".",
-    "module": "commonjs",
+    "target": "es6",
+    "module": "es2020",
     "moduleResolution": "node",
     "declaration": true,
     "removeComments": true,
     "esModuleInterop": true,
     "sourceMap": false,
     "jsx": "preserve",
-    "target": "es2019",
     "lib": [
       "ESNext", "DOM"
     ],
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
   },
   "exclude": [
     "node_modules",
+  ],
+  "include": [
+    "src"
   ]
 }
  

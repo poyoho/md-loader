@@ -12,6 +12,7 @@ module.exports = {
       [
         "compile",
         "plugin",
+        "build",
         "package.json"
       ],
     ],
