@@ -1,10 +1,10 @@
 import { UserConfig } from "vite"
 import path from "path"
-import vueMd from "../src/vite"
+import vueMd from "../dist"
 
 const viteConfig: UserConfig = {
   plugins: [
-    vueMd(),
+    vueMd()
   ],
   resolve: {
     alias: {

@@ -1,7 +1,7 @@
 {
   "name": "@poyoho/loader-md",
   "author": "poyoho",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "vite插件 markdown解析器",
   "main": "dist/index.js",
   "files": [
