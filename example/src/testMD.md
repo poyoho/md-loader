@@ -1,8 +1,26 @@
-# asdadsad
-asdasdasdsaasd
-## asdasd
-
+# 12
 # 1
+asdsad
+::: demo
+```html
+<template>
+  <p>hello world</p>
+  <button @click="() => count++">{{count}}</button>
+</template>
+<script>
+import { defineComponent, ref } from "vue"
+export default defineComponent({
+  setup () {
+    console.log('hello world1')
+    const count = ref(0)
+    return {
+      count
+    }
+  }
+})
+</script>
+```
+:::
 
 ::: demo
 ```html
@@ -14,6 +32,7 @@ asdasdasdsaasd
 import { defineComponent, ref } from "vue"
 export default defineComponent({
   setup () {
+    console.log('hello world2')
     const count = ref(0)
     return {
       count
@@ -22,78 +41,4 @@ export default defineComponent({
 })
 </script>
 ```
-:::
-
-# 2
-
-::: demo
-```html
-<template>
-  <p>hello world</p>
-  <button @click="() => count++">{{count}}</button>
-</template>
-<script>
-import { defineComponent, ref } from "vue"
-export default defineComponent({
-  setup () {
-    const count = ref(0)
-    return {
-      count
-    }
-  }
-})
-</script>
-```
-:::
-
-# 3
-
-::: demo
-```html
-<template>
-  <p>hello world</p>
-  <button @click="() => count++">{{count}}</button>
-</template>
-<script lang="ts">
-import { defineComponent, ref } from "vue"
-export default defineComponent({
-  setup () {
-    const count = ref<number>(0)
-    return {
-      count
-    }
-  }
-})
-</script>
-```
-:::
-
-asdasdsd
-
-|asdasda|asdadad|
-|-------|-------|
-|1|2|
-|3|43|
-
-> hello world
-
->> aasdasda
-
->>> 3333
-
-
-`hello`
-
-_hello_
-
-__hello__
-
-
-[aaaa](https://www.baidu.com/)
-
-ASDASD
-
-### 自定义显示内容
-:::tip
-hello world
 :::

@@ -14,8 +14,9 @@ export function createHtml2VueRenderFn () {
         imports.push(`DemoComponent${count}`)
         return `<DemoComponent${count} />`
       })
-      cache.set(filename, components)
-      const hoistedImport = imports.map(component => `import ${component} from "${filename}?component=${component}";`)
+      const fileNoExtname = filename.substring(0, filename.lastIndexOf(".md"))
+      // 不能发单一文件的请求 让vue hmr保存成多个文件
+      const hoistedImport = imports.map(component => `import ${component} from "${fileNoExtname}_${component}.md";`)
       const vuePage = [
         `<template><div>${template}</div></template>`,
         `<script>`,
@@ -25,9 +26,11 @@ export function createHtml2VueRenderFn () {
         `}`,
         `</script>`
       ].join("\n")
+      components.set(`DemoComponent0`, vuePage)
+      cache.set(filename, components)
       return vuePage
     },
-    component: ( filename: string, componentName: string) => {
+    component: (filename: string, componentName: string) => {
       return cache.get(filename).get(componentName)
     }
   }

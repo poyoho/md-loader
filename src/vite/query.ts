@@ -1,5 +1,3 @@
-import qs from "querystring"
-
 export interface MdQuery {
   component?: string
 }
@@ -7,9 +5,11 @@ export interface MdQuery {
 export function parseRequest(
   id: string
 ): { filename: string; query: MdQuery } {
-  const [filename, rawQuery] = id.split(`?`, 2)
-  const query = qs.parse(rawQuery) as MdQuery
-
+  let query = {} as MdQuery
+  const filename = id.replace(/_(DemoComponent\d+)./, (_, s1) => {
+    query.component = s1
+    return "."
+  })
   return {
     filename,
     query
