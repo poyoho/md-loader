@@ -1,6 +1,6 @@
 {
   "name": "@poyoho/compile-md",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "markdown compile",
   "scripts": {
     "test": "jest -c ./jest.config.js",

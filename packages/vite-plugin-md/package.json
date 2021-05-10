@@ -1,7 +1,7 @@
 {
   "name": "@poyoho/loader-md",
   "author": "poyoho",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "vite插件 markdown解析器",
   "main": "dist/index.js",
   "files": [
@@ -33,8 +33,8 @@
     }
   },
   "dependencies": {
+    "@poyoho/compile-md": "^0.0.5",
     "@vitejs/plugin-vue": "^1.2.1",
-    "@vue/compiler-sfc": "^3.0.11",
-    "@poyoho/compile-md": "^0.0.5"
+    "@vue/compiler-sfc": "^3.0.11"
   }
 }
