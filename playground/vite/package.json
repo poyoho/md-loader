@@ -1,0 +1,10 @@
+{
+  "license": "ISC",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "vue": "^3.0.11"
+  }
+}

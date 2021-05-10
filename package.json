@@ -1,74 +1,80 @@
 {
-  "name": "@poyoho/loader-md",
+  "private": true,
   "author": "poyoho",
-  "version": "0.0.5",
-  "description": "vite插件 markdown解析器",
-  "main": "dist/index.js",
-  "files": [
-    "dist"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/poyoho/loader-md.git"
-  },
-  "bugs": {
-    "url": "https://github.com/poyoho/loader-md/issues"
-  },
-  "homepage": "https://github.com/poyoho/loader-md/blob/master/README.md",
+  "description": "markdown loader",
   "scripts": {
-    "build": "rimraf dist && tsc -p .",
-    "dev": "cd example && yarn dev",
-    "dev:build": "cd example && yarn build",
-    "test": "jest -c ./jest.config.js",
-    "release": "node script/release.js"
+    "bootstrap": "lerna bootstrap",
+    "lint": "eslint ./packages --ext .vue,.js,.ts",
+    "lint-fix": "eslint --fix ./packages --ext .vue,.js,.ts,.tsx",
+    "release": "node script/release.js",
+    "build:compile": "node ./script/build.compile.js",
+    "build:plugin": "node ./script/build.plugin.js",
+    "play:compile-node": "node ./playground/compile/node/nodejs.js",
+    "play:compile-browser": "cd ./playground/compile/browser && vite --open",
+    "play:plugin": "cd ./playground/vite && vite --open"
   },
   "license": "ISC",
-  "lint-staged": {
-    "*.{ts,vue,tsx,jsx,json}": "eslint --fix"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "keywords": [
+    "markdown-it"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
-  "dependencies": {
-    "@poyoho/compile-md": "^0.0.5",
-    "@vitejs/plugin-vue": "^1.2.1",
-    "@vue/compiler-sfc": "^3.0.11"
+  "lint-staged": {
+    "**/*.{js,ts,tsx,jsx,json}": [
+      "eslint --fix --ext .js,.ts,.tsx,.jsx"
+    ]
   },
-  "peerDependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "@types/fs-extra": "^9.0.5",
-    "@types/hash-sum": "^1.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@types/diacritics": "^1.3.1",
+    "@types/escape-html": "^1.0.0",
     "@types/jest": "^26.0.22",
     "@types/markdown-it": "^12.0.0",
+    "@types/markdown-it-anchor": "^7.0.0",
     "@types/markdown-it-container": "^2.0.3",
+    "@types/markdown-it-emoji": "^2.0.0",
+    "@types/prismjs": "^1.16.4",
     "@types/typescript": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
+    "chalk": "^4.1.0",
     "commitizen": "^4.2.2",
     "conventional-changelog-cli": "^2.1.1",
     "cz-conventional-changelog": "^3.3.0",
+    "enquirer": "^2.3.6",
     "eslint": "^7.12.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^7.1.0",
-    "hash-sum": "^2.0.0",
+    "execa": "^5.0.0",
     "husky": "^4.3.0",
     "jest": "^26.6.3",
-    "less": "^4.0.0",
+    "lerna": "^4.0.0",
     "lint-staged": "^10.5.1",
+    "minimist": "^1.2.5",
     "rimraf": "^3.0.2",
+    "rollup": "^2.44.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-dts": "^3.0.1",
+    "rollup-plugin-esbuild": "^4.2.3",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "semver": "^7.3.5",
     "ts-jest": "^26.5.5",
     "typescript": "^4.1.2",
-    "vite": "2.2.1",
-    "vue": "^3.0.5"
+    "vite": "^2.2.4"
   }
 }
