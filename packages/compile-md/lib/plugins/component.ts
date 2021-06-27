@@ -1,9 +1,8 @@
 import MarkdownIt from "markdown-it"
-import { RuleBlock } from "markdown-it/lib/parser_block"
-
 // 替换默认的htmlBlock规则以允许在以下位置使用自定义组件根级别
 import blockNames from"markdown-it/lib/common/html_blocks"
 import { HTML_OPEN_CLOSE_TAG_RE } from "markdown-it/lib/common/html_re"
+import { RuleBlock } from "markdown-it/lib/parser_block"
 
 // html标签的打开和相应关闭序列的数组，最后一个参数定义是否可以终止段落
 const HTML_SEQUENCES: [RegExp, RegExp, boolean][] = [
@@ -15,6 +14,7 @@ const HTML_SEQUENCES: [RegExp, RegExp, boolean][] = [
   // PascalCase Components
   [/^<[A-Z]/, />/, true],
   // custom elements with hyphens
+  // eslint-disable-next-line no-useless-escape
   [/^<\w+\-/, />/, true],
   [
     new RegExp("^</?(" + blockNames.join("|") + ")(?=(\\s|/?>|$))", "i"),
@@ -28,6 +28,7 @@ export const componentPlugin = (md: MarkdownIt) => {
   md.block.ruler.at("html_block", htmlBlock)
 }
 
+// eslint-disable-next-line complexity,
 const htmlBlock: RuleBlock = (state, startLine, endLine, silent): boolean => {
   let i, nextLine, lineText
   let pos = state.bMarks[startLine] + state.tShift[startLine]
@@ -78,6 +79,7 @@ const htmlBlock: RuleBlock = (state, startLine, endLine, silent): boolean => {
       lineText = state.src.slice(pos, max)
 
       if (HTML_SEQUENCES[i][1].test(lineText)) {
+        // eslint-disable-next-line max-depth
         if (lineText.length !== 0) {
           nextLine++
         }

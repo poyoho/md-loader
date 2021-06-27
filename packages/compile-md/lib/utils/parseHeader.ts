@@ -31,6 +31,7 @@ const removeMarkdownTokens = (str: string) =>
   String(str)
     .replace(/(\[(.[^\]]+)\]\((.[^)]+)\))/g, "$2") // []()
     .replace(/(`|\*{1,3}|_)(.*?[^\\])\1/g, "$2") // `{t}` | *{t}* | **{t}** | ***{t}*** | _{t}_
+    // eslint-disable-next-line no-useless-escape
     .replace(/(\\)(\*|_|`|\!|<|\$)/g, "$2") // remove escape char '\'
 
 const trim = (str: string) => str.trim()
@@ -44,8 +45,12 @@ export const removeNonCodeWrappedHTML = (str: string) => {
 }
 
 const compose = (...processors: ((str: string) => string)[]) => {
-  if (processors.length === 0) return (input: string) => input
-  if (processors.length === 1) return processors[0]
+  if (processors.length === 0) {
+    return (input: string) => input
+  }
+  if (processors.length === 1) {
+    return processors[0]
+  }
   return processors.reduce((prev, next) => {
     return (str) => next(prev(str))
   })

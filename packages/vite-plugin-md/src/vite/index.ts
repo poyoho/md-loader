@@ -1,9 +1,10 @@
-import { Plugin } from "vite"
-import { parseRequest } from "./query"
-import { createMarkdonwRenderFn } from "../compile/compileMd"
-import { createHtml2VueRenderFn } from "../compile/compileHtml"
 import createVuePlugin from "@vitejs/plugin-vue"
 import path from "path"
+import { Plugin } from "vite"
+
+import { createHtml2VueRenderFn } from "../compile/compileHtml"
+import { createMarkdonwRenderFn } from "../compile/compileMd"
+import { parseRequest } from "./query"
 
 function slash(p: string): string {
   return p.replace(/\\/g, "/")
@@ -33,8 +34,7 @@ export default function createVueMarkDownPlugin() {
       if (!query.component) {
         // console.log("transform", filename, query, id);
         const html = md.render(code)
-        const vue = template.render(html.html, filename)
-        return vue
+        return template.render(html.html, filename)
       }
     },
 

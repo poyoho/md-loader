@@ -179,9 +179,11 @@ describe("markdown render", () => {
     }
   )
   describe("markdown plugins", () => {
+    // eslint-disable-next-line max-nested-callbacks
     markdownTestCase.slice(start, end).forEach((el) => {
+      // eslint-disable-next-line max-nested-callbacks
       it(el.name, () => {
-        const h5 = renderer.render(el.markdown);
+        const h5 = renderer.render(el.markdown)
         // console.log(h5.html);
         expect(equal(h5.html, el.html)).toBe(true)
       })

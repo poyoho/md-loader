@@ -3,8 +3,9 @@
 // 2. normalize internal links to end with `.html`
 
 import MarkdownIt from "markdown-it"
-import { MarkdownParsedData } from "../markdown"
 import { parse, resolve } from "url"
+
+import { MarkdownParsedData } from "../markdown"
 
 const indexRE = /(^|.*\/)index.md(#?.*)$/i
 
@@ -43,6 +44,7 @@ export const linkPlugin = (
       const [, path, hash] = indexMatch
       url = path + hash
     } else {
+      // eslint-disable-next-line no-useless-escape
       let cleanUrl = url.replace(/\#.*$/, "").replace(/\?.*$/, "")
       // .md -> .html
       if (cleanUrl.endsWith(".md")) {

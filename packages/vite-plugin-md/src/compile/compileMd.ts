@@ -1,7 +1,7 @@
 import { createMarkdownRenderer, MarkdownOptions } from "@poyoho/compile-md"
 import MarkdownIt from "markdown-it"
-import MarkdownItContainer from "markdown-it-container"
 import Token from "markdown-it/lib/token"
+import MarkdownItContainer from "markdown-it-container"
 
 export function DemoContainer(md: MarkdownIt) {
   // 使用md插件,让md支持 :::demo 语法
@@ -26,7 +26,7 @@ export function DemoContainer(md: MarkdownIt) {
 
 export function createMarkdonwRenderFn (
   root: string,
-  options: MarkdownOptions = {},
+  options: MarkdownOptions = {}
 ) {
   const md = createMarkdownRenderer(root, options)
 

@@ -7,7 +7,7 @@ export function createHtml2VueRenderFn () {
     render: (html: string, filename: string) => {
       let count = 0
       const imports: string[] = []
-      const components = new Map<string, string>();
+      const components = new Map<string, string>()
       const template = html.replace(componentRE, (_, s) => {
         count++
         components.set(`DemoComponent${count}`, s)

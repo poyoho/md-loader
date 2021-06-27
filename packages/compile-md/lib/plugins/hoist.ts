@@ -1,4 +1,5 @@
 import MarkdownIt from "markdown-it"
+
 import { MarkdownParsedData } from "../markdown"
 
 // 提升 <script> <style> 标签
@@ -12,8 +13,8 @@ export const hoistPlugin = (md: MarkdownIt) => {
     if (RE.test(content.trim())) {
       hoistedTags.push(content)
       return ""
-    } else {
-      return content
-    }
+    } 
+    return content
+    
   }
 }

@@ -1,21 +1,21 @@
 import MarkdownIt from "markdown-it"
-import { parseHeader } from "./utils/parseHeader"
-import { highlight } from "./plugins/highlight"
-import { slugify } from "./plugins/slugify"
-import { highlightLinePlugin } from "./plugins/highlightLines"
-import { lineNumberPlugin } from "./plugins/lineNumbers"
+import anchor from "markdown-it-anchor"
+import emoji from "markdown-it-emoji"
+import toc from "markdown-it-table-of-contents"
+
 import { componentPlugin } from "./plugins/component"
 import { containerPlugin } from "./plugins/containers"
-import { snippetPlugin } from "./plugins/snippet"
-import { hoistPlugin } from "./plugins/hoist"
-import { preWrapperPlugin } from "./plugins/preWrapper"
-import { linkPlugin } from "./plugins/link"
 import { extractHeaderPlugin } from "./plugins/header"
+import { highlight } from "./plugins/highlight"
+import { highlightLinePlugin } from "./plugins/highlightLines"
+import { hoistPlugin } from "./plugins/hoist"
+import { lineNumberPlugin } from "./plugins/lineNumbers"
+import { linkPlugin } from "./plugins/link"
+import { preWrapperPlugin } from "./plugins/preWrapper"
+import { slugify } from "./plugins/slugify"
+import { snippetPlugin } from "./plugins/snippet"
 import { Header } from "./shared"
-
-import emoji from "markdown-it-emoji"
-import anchor from "markdown-it-anchor"
-import toc from "markdown-it-table-of-contents"
+import { parseHeader } from "./utils/parseHeader"
 
 export interface MarkdownOptions extends MarkdownIt.Options {
   lineNumbers?: boolean
@@ -99,7 +99,7 @@ export const createMarkdownRenderer = (
   // wrap render so that we can return both the html and extracted data.
   const render = md.render
   const wrappedRender: MarkdownRenderer["render"] = (src) => {
-    ;(md as any).__data = {}
+    (md as any).__data = {}
     const html = render.call(md, src)
     return {
       html,

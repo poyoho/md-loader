@@ -15,7 +15,9 @@ export const snippetPlugin = (md: MarkdownIt, root: string) => {
 
     for (let i = 0; i < 3; ++i) {
       const ch = state.src.charCodeAt(pos + i)
-      if (ch !== CH || pos + i >= max) return false
+      if (ch !== CH || pos + i >= max) {
+        return false
+      }
     }
 
     if (silent) {

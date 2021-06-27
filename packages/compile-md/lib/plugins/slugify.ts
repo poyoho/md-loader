@@ -13,8 +13,10 @@ export const slugify = (str: string): string => {
       // Replace special characters
       .replace(rSpecial, "-")
       // Remove continuos separators
+      // eslint-disable-next-line no-useless-escape
       .replace(/\-{2,}/g, "-")
       // Remove prefixing and trailing separtors
+      // eslint-disable-next-line no-useless-escape
       .replace(/^\-+|\-+$/g, "")
       // ensure it doesn't start with a number (#121)
       .replace(/^(\d)/, "_$1")
