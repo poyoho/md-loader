@@ -5,6 +5,7 @@ import toc from "markdown-it-table-of-contents"
 
 import { componentPlugin } from "./plugins/component"
 import { containerPlugin } from "./plugins/containers"
+import { DemoContainer } from "./plugins/demoContainer"
 import { extractHeaderPlugin } from "./plugins/header"
 import { highlight } from "./plugins/highlight"
 import { highlightLinePlugin } from "./plugins/highlightLines"
@@ -27,7 +28,10 @@ export interface MarkdownOptions extends MarkdownIt.Options {
   }
   // https://github.com/Oktavilla/markdown-it-table-of-contents
   toc?: any
-  externalLinks?: Record<string, string>
+  externalLinks?: Record<string, string>,
+  container?: {
+    demo: boolean
+  }
 }
 
 export interface MarkdownParsedData {
@@ -94,6 +98,10 @@ export const createMarkdownRenderer = (
 
   if (options.lineNumbers) {
     md.use(lineNumberPlugin)
+  }
+
+  if (options.container?.demo) {
+    md.use(DemoContainer)
   }
 
   // wrap render so that we can return both the html and extracted data.

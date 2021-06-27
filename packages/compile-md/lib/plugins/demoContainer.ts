@@ -1,4 +1,3 @@
-import { createMarkdownRenderer, MarkdownOptions } from "@poyoho/compile-md"
 import MarkdownIt from "markdown-it"
 import Token from "markdown-it/lib/token"
 import MarkdownItContainer from "markdown-it-container"
@@ -22,18 +21,4 @@ export function DemoContainer(md: MarkdownIt) {
       return "</demo-block>"
     },
   })
-}
-
-export function createMarkdonwRenderFn (
-  root: string,
-  options: MarkdownOptions = {}
-) {
-  const md = createMarkdownRenderer(root, options)
-
-  md.use(DemoContainer)
-
-  return {
-    __data: md.__data,
-    render: md.render,
-  }
 }

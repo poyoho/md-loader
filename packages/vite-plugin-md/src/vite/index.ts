@@ -1,9 +1,9 @@
+import { createMarkdownRenderer } from "@poyoho/compile-md"
 import createVuePlugin from "@vitejs/plugin-vue"
 import path from "path"
 import { Plugin } from "vite"
 
 import { createHtml2VueRenderFn } from "../compile/compileHtml"
-import { createMarkdonwRenderFn } from "../compile/compileMd"
 import { parseRequest } from "./query"
 
 function slash(p: string): string {
@@ -12,7 +12,9 @@ function slash(p: string): string {
 
 export default function createVueMarkDownPlugin() {
   let root = ""
-  const md = createMarkdonwRenderFn(__dirname)
+  const md = createMarkdownRenderer(__dirname, {
+    container: { demo: true }
+  })
   const template = createHtml2VueRenderFn()
   const vuePlugin = createVuePlugin({
     include: [/\.vue$/, /\.md$/],
