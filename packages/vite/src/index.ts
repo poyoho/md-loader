@@ -1,4 +1,4 @@
-import { createMarkdownRenderer } from "@poyoho/compile-md"
+import { createMarkdownRenderer } from "@poyoho/md-loader-compile/dist/node"
 import createVuePlugin from "@vitejs/plugin-vue"
 import path from "path"
 import { Plugin } from "vite"

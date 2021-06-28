@@ -1,5 +1,5 @@
 {
-  "name": "@poyoho/loader-md",
+  "name": "@poyoho/md-loader-vitepress",
   "author": "poyoho",
   "version": "0.0.7",
   "description": "vite插件 markdown解析器",
@@ -9,32 +9,26 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/poyoho/loader-md.git"
+    "url": "git+https://github.com/poyoho/vitepress-theme.git"
   },
   "bugs": {
-    "url": "https://github.com/poyoho/loader-md/issues"
+    "url": "https://github.com/poyoho/vitepress-theme/issues"
   },
-  "homepage": "https://github.com/poyoho/loader-md/blob/master/README.md",
+  "homepage": "https://github.com/poyoho/vitepress-theme/blob/master/README.md",
   "scripts": {
     "build": "rimraf dist && tsc -p .",
     "release": "node script/release.js"
   },
   "license": "ISC",
-  "lint-staged": {
-    "*.{ts,vue,tsx,jsx,json}": "eslint --fix"
-  },
   "publishConfig": {
     "access": "public"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "dependencies": {
-    "@poyoho/compile-md": "^0.0.5",
-    "@vitejs/plugin-vue": "^1.2.1",
-    "@vue/compiler-sfc": "^3.0.11"
+
   }
 }

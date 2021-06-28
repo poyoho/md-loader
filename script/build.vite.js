@@ -2,21 +2,20 @@ const path =  require("path")
 const chalk = require("chalk")
 const rollup =  require("rollup")
 const rm = require("rimraf")
-const pkg = require("../packages/vite-plugin-md/package.json")
-const deps = Object.keys(pkg.dependencies);
-const args = require("minimist")(process.argv.slice(2))
+const pkg = require("../packages/vite/package.json")
+const deps = Object.keys(pkg.dependencies)
 const esbuild = require("rollup-plugin-esbuild")
-const dts = require("rollup-plugin-dts")
 const tsc =  require("rollup-plugin-typescript2")
 
-__dirname = path.join(__dirname, "../packages/vite-plugin-md/")
+__dirname = path.join(__dirname, "../packages/vite/")
+const tsconfigPath = path.join(__dirname, "tsconfig.json")
 const _rollup_options = (_opts) => ({
   input: {
     input: path.join(__dirname, "index.ts"),
     plugins: [
       _opts.dts
         ? tsc({
-          tsconfig: path.join(__dirname, "tsconfig.json"),
+          tsconfig: tsconfigPath,
           tsconfigOverride: {
             compilerOptions: {
               emitDeclarationOnly: true,
@@ -24,12 +23,12 @@ const _rollup_options = (_opts) => ({
           }
         })
         : esbuild({
-          tsconfig: path.join(__dirname, "tsconfig.json"),
+          tsconfig: tsconfigPath,
         }),
     ],
     external(id) {
       // 不打包deps的项目
-      return deps.some(k => new RegExp("^" + k).test(id));
+      return deps.some(k => new RegExp("^" + k).test(id))
     },
   },
   output: {

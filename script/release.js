@@ -107,7 +107,7 @@ async function main () {
         stdio: "pipe"
       })
     } catch(e) {
-      console.log(e);
+      console.log(e)
     }
 
     // publish packages

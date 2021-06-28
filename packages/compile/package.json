@@ -1,16 +1,9 @@
 {
-  "name": "@poyoho/compile-md",
+  "name": "@poyoho/md-loader-compile",
   "version": "0.0.7",
   "description": "markdown compile",
   "scripts": {
-    "test": "jest -c ./jest.config.js",
-    "build": "rimraf dist && node ./script/build.js",
-    "dev": "node ./script/build.js --watch all",
-    "dev:browser": "node ./script/build.js --watch browser",
-    "dev:node": "node ./script/build.js --watch node",
-    "play:browser": "vite",
-    "play:node": "cd playground && node ./nodejs.js",
-    "release": "node script/release.js"
+    "test": "jest -c ./jest.config.js"
   },
   "author": "poyoho",
   "license": "ISC",
@@ -29,7 +22,6 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },

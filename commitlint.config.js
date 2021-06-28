@@ -10,6 +10,7 @@ module.exports = {
       2,
       "always",
       [
+        "packages",
         "compile",
         "plugin",
         "build",
@@ -17,4 +18,4 @@ module.exports = {
       ],
     ],
   },
-};
+}

@@ -1581,20 +1581,6 @@
   dependencies:
     "@octokit/openapi-types" "^7.3.5"
 
-"@poyoho/compile-md@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@poyoho/compile-md/-/compile-md-0.0.5.tgz#69c9808a296ff07b774b07d02033516a0f4bcc17"
-  integrity sha512-m/EoFxYmmqBZaImChBlYExUHMMIoRf4ZVgpcg/m+BRsNORYPuy/Ec8/y18vBQ1zg3vQuXbg3QGe32O+ieVBODA==
-  dependencies:
-    diacritics "^1.3.0"
-    escape-html "^1.0.3"
-    markdown-it "^10.0.0"
-    markdown-it-anchor "^5.2.7"
-    markdown-it-container "^2.0.0"
-    markdown-it-emoji "^1.4.0"
-    markdown-it-table-of-contents "^0.4.4"
-    prismjs "^1.23.0"
-
 "@poyoho/eslint-plugin-config@^0.0.2":
   version "0.0.2"
   resolved "https://registry.npmjs.org/@poyoho/eslint-plugin-config/-/eslint-plugin-config-0.0.2.tgz#f0e0c61b6e53f4efbb71dc179f485380709fc25d"

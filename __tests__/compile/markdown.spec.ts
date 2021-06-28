@@ -1,5 +1,6 @@
-import path = require("path")
-import { createMarkdownRenderer } from "../lib/markdown"
+import path from "path"
+
+import { createMarkdownRenderer } from "../../packages/compile/src/markdown"
 
 // case
 const markdownTestCase = [

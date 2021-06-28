@@ -1,4 +1,5 @@
 {
+  "name": "md-loader",
   "private": true,
   "author": "poyoho",
   "description": "markdown loader",
@@ -8,12 +9,8 @@
     "lint-fix": "eslint --fix ./packages --ext .vue,.js,.ts,.tsx",
     "release": "node script/release.js",
     "build:compile": "node ./script/build.compile.js",
-    "build:plugin": "node ./script/build.plugin.js",
-    "build:compile-md": "yarn build:compile",
-    "build:vite-plugin-md": "yarn build:plugin",
-    "play:compile-node": "node ./playground/compile/node/nodejs.js",
-    "play:compile-browser": "cd ./playground/compile/browser && vite --open",
-    "play:plugin": "cd ./playground/vite && vite --open"
+    "build:vite": "node ./script/build.vite.js",
+    "build": "yarn build:compile && yarn build:vite"
   },
   "license": "ISC",
   "workspaces": [

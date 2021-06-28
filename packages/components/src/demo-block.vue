@@ -36,9 +36,9 @@ export default defineComponent({
   components: {
   },
   setup() {
-    const desc = ref<HTMLElement>()
-    const high = ref<HTMLElement>()
-    const meta = ref<HTMLElement>()
+    const desc = ref()
+    const high = ref()
+    const meta = ref()
 
     const state = reactive({
       expaned: false,

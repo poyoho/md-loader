@@ -6,7 +6,7 @@
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "target": "es6",
-    "module":"es2015",
+    "module": "es6",
     "strict": true,
     "noImplicitAny": true,
     "sourceMap": false,
@@ -20,9 +20,6 @@
     "strictNullChecks": true, // 启用严格的空检查
     "strictFunctionTypes": true, // 启用对函数类型的严格检查。
   },
-  "include": [
-    "lib",
-  ],
   "exclude": [
     "dist",
     "node_modules"
