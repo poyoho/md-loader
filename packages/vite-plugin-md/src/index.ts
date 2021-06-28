@@ -3,7 +3,7 @@ import createVuePlugin from "@vitejs/plugin-vue"
 import path from "path"
 import { Plugin } from "vite"
 
-import { createHtml2VueRenderFn } from "../compile/compileHtml"
+import { createHtml2VueRenderFn } from "./compileHtml"
 import { parseRequest } from "./query"
 
 function slash(p: string): string {

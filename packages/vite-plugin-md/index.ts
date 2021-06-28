@@ -1,4 +1,4 @@
-import createVueMarkDownPlugin from "./src/vite"
-export * from "./src/vite"
+import createVueMarkDownPlugin from "./src"
+export * from "./src"
 export default createVueMarkDownPlugin
 exports.default = createVueMarkDownPlugin
