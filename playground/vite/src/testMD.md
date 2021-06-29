@@ -13,7 +13,7 @@ bbbb
 | asd | bbb |
 | asd | bbb |
 
-```html
+```vue
 <template>
   <p class="hello-wrap">hello world</p>
   <button @click="() => count++">{{count}}</button>

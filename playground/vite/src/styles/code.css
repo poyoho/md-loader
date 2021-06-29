@@ -125,90 +125,92 @@ div[class*='language-'].line-numbers-mode {
   color: #888;
 }
 
-[class~='language-html']:before,
-[class~='language-markup']:before {
+[class='language-html']:before,
+[class='language-markup']:before {
   content: 'html';
 }
 
-[class~='language-md']:before,
-[class~='language-markdown']:before {
+[class='language-md']:before,
+[class='language-markdown']:before {
   content: 'md';
 }
 
-[class~='language-css']:before {
+[class='language-css']:before {
   content: 'css';
 }
 
-[class~='language-sass']:before {
+[class='language-sass']:before {
   content: 'sass';
 }
 
-[class~='language-scss']:before {
+[class='language-scss']:before {
   content: 'scss';
 }
 
-[class~='language-less']:before {
+[class='language-less']:before {
   content: 'less';
 }
 
-[class~='language-stylus']:before {
+[class='language-stylus']:before {
   content: 'styl';
 }
 
-[class~='language-js']:before,
-[class~='language-javascript']:before {
+[class='language-js']:before,
+[class='language-javascript']:before {
   content: 'js';
 }
 
-[class~='language-ts']:before,
-[class~='language-typescript']:before {
+[class='language-ts']:before,
+[class='language-typescript']:before {
   content: 'ts';
 }
 
-[class~='language-json']:before {
+[class='language-json']:before {
   content: 'json';
 }
-
-[class~='language-rb']:before,
-[class~='language-ruby']:before {
+[class='language-vue']:before {
+  content: 'vue';
+}
+[class='language-rb']:before,
+[class='language-ruby']:before {
   content: 'rb';
 }
 
-[class~='language-py']:before,
-[class~='language-python']:before {
+[class='language-py']:before,
+[class='language-python']:before {
   content: 'py';
 }
 
-[class~='language-sh']:before,
-[class~='language-bash']:before {
+[class='language-sh']:before,
+[class='language-bash']:before {
   content: 'sh';
 }
 
-[class~='language-php']:before {
+[class='language-php']:before {
   content: 'php';
 }
 
-[class~='language-go']:before {
+[class='language-go']:before {
   content: 'go';
 }
 
-[class~='language-rust']:before {
+[class='language-rust']:before {
   content: 'rust';
 }
 
-[class~='language-java']:before {
+[class='language-java']:before {
   content: 'java';
 }
 
-[class~='language-c']:before {
+[class='language-c']:before {
   content: 'c';
 }
 
-[class~='language-yaml']:before {
+[class='language-yaml']:before {
   content: 'yaml';
 }
 
-[class~='language-dockerfile']:before {
+[class='language-dockerfile']:before {
   content: 'dockerfile';
 }
 
