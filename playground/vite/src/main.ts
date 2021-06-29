@@ -1,7 +1,4 @@
-import "./styles/code.css"
-import "./styles/custom-blocks.css"
-import "./styles/layout.css"
-import "./styles/vars.css"
+import "@poyoho/md-loader-themes/src/simple/index.css"
 
 import MdComponent from "@poyoho/md-loader-components"
 import { createApp } from "vue"
