@@ -16,7 +16,6 @@ export const preWrapperPlugin = (md: MarkdownIt) => {
     const [tokens, idx] = args
     const token = tokens[idx]
     const rawCode = fence(...args)
-    console.log("preWrapperPlugin", token)
     return `<div slot="highlight"><div class="language-${token.info.trim()}">${rawCode}</div></div>`
   }
 }
