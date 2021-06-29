@@ -5,7 +5,13 @@ import { defineConfig } from "vite"
 export default defineConfig({
   plugins: [
     vueMd({
-
+      vueCompile: {
+        template: {
+          compilerOptions: {
+            isCustomElement: (tag) => tag === "demo-block"
+          }
+        }
+      }
     })
   ],
   resolve: {

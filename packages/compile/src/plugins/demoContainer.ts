@@ -7,7 +7,7 @@ export function DemoContainer(md: MarkdownIt) {
   md.use(MarkdownItContainer, "demo", {
     render(tokens: Token[], idx: number) {
       if (tokens[idx].nesting === 1) {
-        const currentTokens = tokens.slice(idx+1, tokens.findIndex(token => token.type === "container_demo_close")+1)
+        const currentTokens = tokens.slice(idx+1, tokens.findIndex(token => token.type === "container_demo_close"))
         const groupedToken = currentTokens.reduce((prev, token) => {
           if(token.type === "fence") {
             prev.fence.push(token)
@@ -24,7 +24,7 @@ export function DemoContainer(md: MarkdownIt) {
         return [
           `<demo-block>`,
           ` ${desc ? `<div slot="description">${desc}</div>` : ""}`,
-          ` <div slot="exec"><!--element-demo:${content}:element-demo--></div>`
+          ` <div slot="exec"><!--element-demo: ${content} :element-demo--></div>`
         ].join("\n")
       }
       return "</demo-block>"
