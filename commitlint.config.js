@@ -10,6 +10,8 @@ module.exports = {
       2,
       "always",
       [
+        "component",
+        "plugins",
         "packages",
         "compile",
         "plugin",

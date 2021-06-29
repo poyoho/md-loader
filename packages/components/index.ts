@@ -1,5 +1,9 @@
-import DemoBlockElement from "./src/demo-block-element"
+import DemoBlockElement from "./src/demo-block"
 
-export function install() {
+function install() {
   window.customElements.define("demo-block", DemoBlockElement)
+}
+
+export default {
+  install
 }

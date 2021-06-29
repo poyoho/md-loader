@@ -25,6 +25,7 @@
   "files": [
     "dist"
   ],
+  "main": "index.ts",
   "devDependencies": {
   }
 }
