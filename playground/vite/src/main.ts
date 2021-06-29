@@ -1,14 +1,16 @@
-import { createApp } from "vue"
-import App from "./App.vue"
-import demoBlock from "./demo-block/demo-block.vue"
 import "./styles/code.css"
 import "./styles/custom-blocks.css"
 import "./styles/layout.css"
 import "./styles/vars.css"
 
-const app = createApp(App)
+import MdComponent from "@poyoho/md-loader-components"
+import { createApp } from "vue"
 
-app.component("DemoBlock", demoBlock)
+import App from "./App.vue"
+
+const app = createApp(App)
 app.mount("#app")
+
+MdComponent.install()
 
 export default app

@@ -1,5 +1,5 @@
 import { createMarkdownRenderer } from "@poyoho/md-loader-compile"
-import createVuePlugin from "@vitejs/plugin-vue"
+import createVuePlugin, { Options } from "@vitejs/plugin-vue"
 import path from "path"
 import { Plugin } from "vite"
 
@@ -10,7 +10,11 @@ function slash(p: string): string {
   return p.replace(/\\/g, "/")
 }
 
-export default function createVueMarkDownPlugin() {
+interface VueMarkdownOptions {
+  vueCompile?: Options
+}
+
+export default function createVueMarkDownPlugin(opts: VueMarkdownOptions = {}) {
   let root = ""
   const md = createMarkdownRenderer(__dirname, {
     container: { demo: true }
@@ -18,6 +22,7 @@ export default function createVueMarkDownPlugin() {
   const template = createHtml2VueRenderFn()
   const vuePlugin = createVuePlugin({
     include: [/\.vue$/, /\.md$/],
+    ...opts.vueCompile
   })
 
   const mdPlugin: Plugin = {

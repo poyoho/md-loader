@@ -129,32 +129,6 @@ export default {
   <span class="token punctuation">}</span>
   </code></pre></div></template>`
   },
-  { // 8 hoist script styles
-    name: "hoist",
-    markdown: `
-# 111
-
-<template>
-</template>
-
-<script>
-const a = 10
-</script>
-
-<script>
-const b = 20
-</script>
-
-<p>asda</p>
-
-<style>
-</style>
-    `,
-    html: `<h1 id="_111"><a class="header-anchor" href="#_111" aria-hidden="true">#</a> 111</h1>
-    <template>
-    </template>
-    <p>asda</p>`
-  },
   { // 9 import code
     name: "import code",
     markdown: `<<< @/__tests__/testImport.md`,

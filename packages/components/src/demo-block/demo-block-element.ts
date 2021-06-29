@@ -22,7 +22,7 @@ export default html`
   .expaned-block {
     overflow: hidden;
     height: 0;
-    transition: height .5s;
+    transition: height .3s;
   }
   .expaned-block .description {
     margin: 0 10px;
@@ -36,6 +36,7 @@ export default html`
   }
   /* control wrap */
   .control {
+    user-select: none;
     height: 30px;
     line-height: 30px;
     border-top: 1px solid #ebebeb;
@@ -56,13 +57,15 @@ export default html`
 <div class="demo-block">
   <!-- 代码执行ui -->
   <div class="exec">
-    <slot name="exec">aaa</slot>
+    <slot name="exec"></slot>
   </div>
   <!-- 源码区 -->
   <div class="expaned-block source">
-    <slot name="description">bbb</slot>
+    <div class="description">
+      <slot name="description"></slot>
+    </div>
     <div class="highlight">
-      <slot name="highlight">ccc</slot>
+      <slot name="highlight"></slot>
     </div>
   </div>
   <!-- 控制区 -->

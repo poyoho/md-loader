@@ -5,12 +5,7 @@ import container from "markdown-it-container"
 export const containerPlugin = (md: MarkdownIt) => {
   md.use(...createContainer("tip", "TIP"))
     .use(...createContainer("warning", "WARNING"))
-    .use(...createContainer("danger", "WARNING"))
-    // // explicitly escape Vue syntax
-    // .use(container, 'v-pre', {
-    //   render: (tokens: Token[], idx: number) =>
-    //     tokens[idx].nesting === 1 ? `<div v-pre>\n` : `</div>\n`
-    // })
+    .use(...createContainer("danger", "DANGER"))
 }
 
 type ContainerArgs = [

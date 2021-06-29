@@ -36,15 +36,6 @@ export const highlight = (str: string, lang: string) => {
   }
   const rawlang = lang.toLowerCase()
   lang = map[rawlang] || rawlang
-  // if (!prism.languages[lang]) {
-  //   try {
-  //     // loadLanguages([lang])
-  //   } catch (e) {
-  //     console.warn(
-  //         `Syntax highlight for language "${lang}" is not supported.`
-  //     )
-  //   }
-  // }
   if (prism.languages[lang]) {
     const code = prism.highlight(str, prism.languages[lang], lang)
     return wrap(code, rawlang)
