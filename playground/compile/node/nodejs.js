@@ -1,4 +1,4 @@
-const { createMarkdownRenderer } = require("@poyoho/compile-md")
+const { createMarkdownRenderer } = require("@poyoho/md-loader-compile")
 
 const renderer = createMarkdownRenderer(__dirname, {
 
@@ -30,4 +30,4 @@ hello tip container
 <<< @/__tests__/testImport.md
 `
 
-console.log(renderer.render(text));
+console.log(renderer.render(text))
