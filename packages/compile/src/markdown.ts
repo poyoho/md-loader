@@ -15,8 +15,15 @@ import { linkPlugin } from "./plugins/link"
 import { preWrapperPlugin } from "./plugins/preWrapper"
 import { slugify } from "./plugins/slugify"
 import { snippetPlugin } from "./plugins/snippet"
-import { Header } from "./shared"
 import { parseHeader } from "./utils/parseHeader"
+
+export interface Header {
+  level: number
+  title: string
+  slug: string
+}
+
+declare let window: Object | undefined
 
 export interface MarkdownOptions extends MarkdownIt.Options {
   lineNumbers?: boolean

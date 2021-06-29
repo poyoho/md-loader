@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "baseUrl": ".",
     "lib": ["es6"],
     "resolveJsonModule": true,
     "moduleResolution": "node",
@@ -23,5 +22,5 @@
   "exclude": [
     "dist",
     "node_modules"
-  ]
+  ],
 }

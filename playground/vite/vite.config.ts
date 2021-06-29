@@ -1,8 +1,8 @@
-import { UserConfig } from "vite"
+import vueMd from "@poyoho/md-loader-vite"
 import path from "path"
-import vueMd from "@poyoho/loader-md"
+import { defineConfig } from "vite"
 
-const viteConfig: UserConfig = {
+export default defineConfig({
   plugins: [
     vueMd()
   ],
@@ -11,6 +11,5 @@ const viteConfig: UserConfig = {
       "@": path.resolve("./src"),
     }
   }
-}
+})
 
-export default viteConfig

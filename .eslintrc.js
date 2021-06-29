@@ -16,6 +16,8 @@ module.exports = {
     "sonarjs/cognitive-complexity": "off",
     "consistent-return": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "max-params": "off"
+    "max-params": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }

@@ -2,21 +2,10 @@
   "name": "@poyoho/md-loader-components",
   "version": "0.0.7",
   "description": "markdown compile",
-  "scripts": {
-    "test": "jest -c ./jest.config.js"
-  },
+  "scripts": {},
   "author": "poyoho",
   "license": "ISC",
-  "dependencies": {
-    "diacritics": "^1.3.0",
-    "escape-html": "^1.0.3",
-    "markdown-it": "^10.0.0",
-    "markdown-it-anchor": "^5.2.7",
-    "markdown-it-container": "^2.0.0",
-    "markdown-it-emoji": "^1.4.0",
-    "markdown-it-table-of-contents": "^0.4.4",
-    "prismjs": "^1.23.0"
-  },
+  "dependencies": {},
   "keywords": [
     "markdown-it"
   ],
@@ -36,7 +25,6 @@
   "files": [
     "dist"
   ],
-  "module": "./dist/browser.js",
-  "main": "./dist/node.js",
-  "types": "./dist/index.d.ts"
+  "devDependencies": {
+  }
 }
