@@ -5,21 +5,21 @@ function replaceWhitespace(a: string) {
 }
 
 const md = `
-:tada:
+::: tip
+asdasdasda
+:::
 `
 
 const h5 = `
-<p>🎉</p>
+<div class="tip custom-block">
+<p class="custom-block-title">TIP</p>
+<p>asdasdasda</p>
+</div>
 `
 
 describe("markdown render", () => {
-  const renderer = createMarkdownRenderer(
-    process.cwd(),
-    {
-      lineNumbers: true
-    }
-  )
-  it("emoji", () => {
+  const renderer = createMarkdownRenderer(process.cwd())
+  it("containers", () => {
     expect(replaceWhitespace((renderer.render(md)).html)).toContain(replaceWhitespace(h5))
   })
 })

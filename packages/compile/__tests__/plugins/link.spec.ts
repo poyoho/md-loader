@@ -21,17 +21,12 @@ const h52 = `
 `
 
 describe("markdown render", () => {
-  const renderer = createMarkdownRenderer(
-    process.cwd(),
-    {
-      lineNumbers: true
-    }
-  )
+  const renderer = createMarkdownRenderer(process.cwd())
   it("external link", () => {
     expect(replaceWhitespace((renderer.render(md)).html)).toContain(replaceWhitespace(h5))
   })
   it("internal link", () => {
-    expect(replaceWhitespace((renderer.render(md2)).html)).toContain(h52)
+    expect(replaceWhitespace((renderer.render(md2)).html)).toContain(replaceWhitespace(h52))
 
   })
 })

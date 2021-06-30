@@ -32,10 +32,11 @@ export interface MarkdownOptions extends MarkdownIt.Options {
   // https://github.com/Oktavilla/markdown-it-table-of-contents
   toc?: any
   externalLinks?: Record<string, string>,
-  container?: {
+  modules?: {
     demo?: boolean
     component?: boolean
-  }
+    snippet?: boolean
+  },
 }
 
 export interface MarkdownParsedData {
@@ -88,7 +89,7 @@ export const createMarkdownRenderer = (
     })
 
   // nodejs环境
-  if(typeof window === "undefined") {
+  if(options.modules?.snippet) {
     md.use(snippetPlugin, root) // 引入外部文件
   }
 
@@ -96,11 +97,11 @@ export const createMarkdownRenderer = (
     md.use(lineNumberPlugin)
   }
 
-  if (options.container?.demo) {
+  if (options.modules?.demo) {
     md.use(DemoContainer)
   }
 
-  if (options.container?.component) {
+  if (options.modules?.component) {
     md.use(ComponentContainer)
   }
 

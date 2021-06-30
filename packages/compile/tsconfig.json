@@ -3,11 +3,5 @@
   "include": [
     "src",
   ],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "*": ["typings/*"]
-    },
-  },
-  "extends": "../../tsconfig.json"
+  "extends": "../../tsconfig.base.json"
 }

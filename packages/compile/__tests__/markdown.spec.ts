@@ -4,7 +4,7 @@ function replaceWhitespace(a: string) {
   return a.replace(/\s/g, "")
 }
 
-const md = `
+const tocMd = `
 # Heading
 
 [[toc]]
@@ -16,7 +16,7 @@ Some nice text
 Some even nicer text
 `
 
-const h5 = `
+const tocH5 = `
 <h1 id="heading">
   <a class="header-anchor" href="#heading" aria-hidden="true">#</a> Heading
 </h1>
@@ -37,14 +37,20 @@ const h5 = `
 </h2>
 <p>Some even nicer text</p>`
 
+const emojiMd = `
+:tada:
+`
+
+const emojiH5 = `
+<p>🎉</p>
+`
+
 describe("markdown render", () => {
-  const renderer = createMarkdownRenderer(
-    process.cwd(),
-    {
-      lineNumbers: true
-    }
-  )
+  const renderer = createMarkdownRenderer(process.cwd())
   it("toc", () => {
-    expect(replaceWhitespace((renderer.render(md)).html)).toContain(replaceWhitespace(h5))
+    expect(replaceWhitespace((renderer.render(tocMd)).html)).toContain(replaceWhitespace(tocH5))
+  })
+  it("emoji", () => {
+    expect(replaceWhitespace((renderer.render(emojiMd)).html)).toContain(replaceWhitespace(emojiH5))
   })
 })
