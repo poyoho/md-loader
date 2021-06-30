@@ -44,8 +44,7 @@ export default html`
   /* source wrap */
   .expaned-block {
     overflow: hidden;
-    height: 0;
-    transition: height .3s;
+    transition: all .3s;
   }
   .expaned-block .description {
     margin: 0 10px;
