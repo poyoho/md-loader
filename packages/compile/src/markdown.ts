@@ -20,8 +20,6 @@ export interface Header {
   slug: string
 }
 
-declare let window: Object | undefined
-
 export interface MarkdownOptions extends MarkdownIt.Options {
   lineNumbers?: boolean
   anchor?: {
