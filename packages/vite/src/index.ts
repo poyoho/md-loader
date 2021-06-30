@@ -17,7 +17,7 @@ interface VueMarkdownOptions {
 export default function createVueMarkDownPlugin(opts: VueMarkdownOptions = {}) {
   let root = ""
   const md = createMarkdownRenderer(__dirname, {
-    container: { demo: true }
+    container: { demo: true, component: true }
   })
   const template = createHtml2VueRenderFn()
   const vuePlugin = createVuePlugin({

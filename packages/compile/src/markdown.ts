@@ -3,7 +3,7 @@ import anchor from "markdown-it-anchor"
 import emoji from "markdown-it-emoji"
 import toc from "markdown-it-table-of-contents"
 
-// import { componentPlugin } from "./plugins/component"
+import { ComponentContainer } from "./plugins/componentContainer"
 import { containerPlugin } from "./plugins/containers"
 import { DemoContainer } from "./plugins/demoContainer"
 import { highlight } from "./plugins/highlight"
@@ -33,7 +33,8 @@ export interface MarkdownOptions extends MarkdownIt.Options {
   toc?: any
   externalLinks?: Record<string, string>,
   container?: {
-    demo: boolean
+    demo?: boolean
+    component?: boolean
   }
 }
 
@@ -70,7 +71,7 @@ export const createMarkdownRenderer = (
       ...options.externalLinks
     })
 
-  // 3rd party plugins
+    // 3rd party plugins
     .use(emoji as any)
     .use(anchor, {
       slugify,
@@ -97,6 +98,10 @@ export const createMarkdownRenderer = (
 
   if (options.container?.demo) {
     md.use(DemoContainer)
+  }
+
+  if (options.container?.component) {
+    md.use(ComponentContainer)
   }
 
   // wrap render so that we can return both the html and extracted data.
