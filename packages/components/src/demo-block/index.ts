@@ -1,10 +1,10 @@
 import teamplateElement from "./demo-block-element"
-
 interface State {
   expaned: boolean
   height: number
   componentContext: string
 
+  expandContractIconNode: HTMLElement
   expandContractTextNode: HTMLSpanElement
   expandContractWrapNode: HTMLDivElement
 }
@@ -27,15 +27,20 @@ function expandContract(e: Event) {
   if (state.expaned) {
     state.expandContractWrapNode.style.height = `${state.height}px`
     state.expandContractTextNode.textContent = "隐藏"
+    state.expandContractIconNode.className = "expand"
   } else {
     state.expandContractWrapNode.style.height = "0"
     state.expandContractTextNode.textContent = "展开"
+    state.expandContractIconNode.className = "contract"
   }
   states.set(demoBlock, state)
 }
 
 function copyToClipBoard(e: Event) {
-  const target = e.target! as HTMLElement
+  const target = e.currentTarget! as HTMLElement
+  if (target.textContent === "copyed") {
+    return
+  }
   const demoBlock = getShadowHost(target) as DemoBlockElement
   const state = states.get(demoBlock)!
   e.stopPropagation()
@@ -65,18 +70,22 @@ export default class DemoBlockElement extends HTMLElement {
     const ctrl = this.ctrl
     const component = this.componentSource
     const copyIcon = this.copyIcon
-
+    const expandContractIcon = this.expandContractIcon
     const state: State = {
       expaned: false,
       height: source.clientHeight,
       componentContext: component?.textContent || "",
 
+      expandContractIconNode: expandContractIcon,
       expandContractTextNode: tipText,
       expandContractWrapNode: source
     }
     states.set(this, state)
 
     source.style.height = "0"
+    // if(component?.className.includes("vue")) {
+    //   appendVueSFCPlaygroundCtrl(ctrl, state.componentContext)
+    // }
     ctrl.addEventListener("click", expandContract)
     copyIcon.addEventListener("click", copyToClipBoard)
     copyIcon.addEventListener("mouseleave", resetCopyIcon)
@@ -108,8 +117,12 @@ export default class DemoBlockElement extends HTMLElement {
     return this.shadowRoot!.querySelector<HTMLSpanElement>(".control span")!
   }
 
+  get expandContractIcon(): HTMLElement {
+    return this.shadowRoot!.querySelector<HTMLSpanElement>(".control .contract")!
+  }
+
   get copyIcon(): HTMLElement {
-    return this.shadowRoot!.querySelector<HTMLElement>(".control .copy")!
+    return this.shadowRoot!.querySelector<HTMLElement>(".highlight .copy")!
   }
 
   get componentSource(): HTMLDivElement | null {
