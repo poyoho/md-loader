@@ -1,6 +1,16 @@
 # 12
 # 1
 
+
+::: component
+
+| pr op | ty\`p\`e | *default* | __require__ | _comment_   | asd |
+|-------|----------|-----------|-------------|-------------|-----|
+| abcd  | number   | 1         | true        | \`comment\` | asd |
+| efgh  | number   | 2         | true        | \`comment\` | zxc |
+
+:::
+
 ::: demo
 
 ```vue
