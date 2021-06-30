@@ -4,6 +4,7 @@
   "author": "poyoho",
   "description": "markdown loader",
   "scripts": {
+    "test": "jest",
     "bootstrap": "lerna bootstrap",
     "lint": "eslint ./packages --ext .vue,.js,.ts",
     "lint-fix": "eslint --fix ./packages --ext .vue,.js,.ts,.tsx",

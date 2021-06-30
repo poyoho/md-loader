@@ -1,7 +1,7 @@
 import { createMarkdownRenderer } from "@poyoho/md-loader-compile"
 
-function equal(a: string, b: string) {
-  return a.replace(/\s/g, "") === b.replace(/\s/g, "")
+function replaceWhitespace(a: string) {
+  return a.replace(/\s/g, "")
 }
 
 const md = `
@@ -21,7 +21,6 @@ describe("markdown render", () => {
     }
   )
   it("emoji", () => {
-    const renderH5 = renderer.render(md)
-    expect(equal(renderH5.html, h5)).toBe(true)
+    expect(replaceWhitespace((renderer.render(md)).html)).toContain(replaceWhitespace(h5))
   })
 })

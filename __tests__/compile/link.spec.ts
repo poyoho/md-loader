@@ -1,7 +1,7 @@
 import { createMarkdownRenderer } from "@poyoho/md-loader-compile"
 
-function equal(a: string, b: string) {
-  return a.replace(/\s/g, "") === b.replace(/\s/g, "")
+function replaceWhitespace(a: string) {
+  return a.replace(/\s/g, "")
 }
 
 const md = `
@@ -28,11 +28,10 @@ describe("markdown render", () => {
     }
   )
   it("external link", () => {
-    const renderH5 = renderer.render(md)
-    expect(equal(renderH5.html, h5)).toBe(true)
+    expect(replaceWhitespace((renderer.render(md)).html)).toContain(replaceWhitespace(h5))
   })
   it("internal link", () => {
-    const renderH5 = renderer.render(md2)
-    expect(equal(renderH5.html, h52)).toBe(true)
+    expect(replaceWhitespace((renderer.render(md2)).html)).toContain(h52)
+
   })
 })
