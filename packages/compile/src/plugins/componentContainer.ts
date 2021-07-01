@@ -15,20 +15,15 @@ interface ComponentToken {
   comment: string
 }
 
-interface RenderResult {
-  keys: string[]
-  html: string
-}
-
 function sliceTokens(tokens: Token[], startTokenType: string, endTokenType: string, cursor?: Cursor) {
-  const _tokens = cursor ? tokens.slice(cursor.end+1) : tokens
+  const _tokens = cursor ? tokens.slice(cursor.end) : tokens
   const startIdx = _tokens.findIndex(token => token.type === startTokenType)
   const endIdx = _tokens.findIndex(token => token.type === endTokenType) + 1
   if (cursor) {
     const isNotFinded = startIdx === -1 || endIdx === -1
-    const lastEnd = cursor.end+1
+    const lastEnd = cursor.end
     cursor.start = isNotFinded ? tokens.length : lastEnd + startIdx
-    cursor.end = isNotFinded ? tokens.length : lastEnd + endIdx
+    cursor.end = isNotFinded ? tokens.length : cursor.start + endIdx
   }
   return _tokens.splice(startIdx, endIdx)
 }
@@ -42,13 +37,10 @@ type renderFn = (
   self: Renderer
 ) => string
 
-function renderTableCollectText(md: MarkdownIt, spliteType: string, appendToken: {
-  token: Token, // this token type must be new
-  render: renderFn
-}) {
+function renderTableCollectText(md: MarkdownIt, spliteType: string, appendToken: Record<string, renderFn>) {
   const _rules = md.renderer.rules
 
-  const keys = [] as string[]
+  let keys = [] as string[]
   let formatedKeys = [] as string[]
   const UNEXPECTED_WORD = /[-_ ]/g
 
@@ -65,10 +57,15 @@ function renderTableCollectText(md: MarkdownIt, spliteType: string, appendToken:
     keys.push(token[idx].content)
     return ""
   }
-  md.renderer.rules[appendToken.token.type] = (token, idx, opts, env, self) => {
-    formatedKeys = keys.join("").split("|")
-    return appendToken.render(formatedKeys, token, idx, opts, env, self)
+  for(const tokenType in appendToken) {
+    const rule = appendToken[tokenType]
+    md.renderer.rules[tokenType] = (token, idx, opts, env, self) => {
+      formatedKeys = keys.join("").split("|")
+      keys = [] // clear keys
+      return rule(formatedKeys, token, idx, opts, env, self)
+    }
   }
+
 
   return (tokens: Token[]) => {
     tokens = tokens.reduce((prev, next) => {
@@ -81,8 +78,6 @@ function renderTableCollectText(md: MarkdownIt, spliteType: string, appendToken:
       prev.push(next)
       return prev
     }, [] as Token[])
-    // end 2 append new token
-    tokens.splice(tokens.length - 2, 0, appendToken.token)
 
     const html = md.renderer.render(tokens, md.options, {})
     md.renderer.rules = _rules
@@ -95,8 +90,7 @@ function renderTableCollectText(md: MarkdownIt, spliteType: string, appendToken:
 
 function renderHeader(md: MarkdownIt, tokens: Token[], supportTableColumn: string[]) {
   const res = renderTableCollectText(md, "th_close", {
-    token: new Token("th_ctrl", "", 0),
-    render() {
+    th_ctrl: () => {
       return "<th>🛠</th>"
     }
   })(tokens)
@@ -106,17 +100,30 @@ function renderHeader(md: MarkdownIt, tokens: Token[], supportTableColumn: strin
   }
 }
 
+function renderControler(token: ComponentToken): string {
+  switch(token.type) {
+    case "number":
+      return `<input type="number" />`
+    case "string":
+      return `<input type="text" />`
+    case "boolean":
+      return `<input text="boolean" />`
+    case "option":
+      return `<input type="option" />`
+    default:
+      return ""
+  }
+}
+
 function renderLineser(md: MarkdownIt, thKeys: string[]) {
   return renderTableCollectText(md, "td_close", {
-    token: new Token("td_ctrl", "", 0),
-    render(formatedKeys) {
+    td_ctrl: (formatedKeys) => {
       const token = formatedKeys.reduce((prev, next, idx)=> {
         const key = thKeys[idx]
         key && (prev[key] = next)
         return prev
-      }, {})
-      console.log(token)
-      return "<td></td>"
+      }, {} as ComponentToken)
+      return `<td>${renderControler(token)}</td>`
     }
   })
 }
@@ -129,14 +136,23 @@ function renderTable(
   const tableCursor = {start: 0, end: 0}
   // table header
   const threadTokens = sliceTokens(tableTokens, "thead_open", "thead_close", tableCursor)
-  const thResult = renderHeader(md, threadTokens, supportTableColumn)
+  // <thead><tr> (insert in this) </tr></thead>
+  threadTokens.splice(-3, 0, new Token("th_ctrl", "", 0))
+  const thResult = renderHeader(
+    md,
+    threadTokens,
+    supportTableColumn
+  )
 
   // table
   const lineResult = [] as string[]
   const lineRenderer = renderLineser(md, thResult.keys)
   while(tableTokens.length > tableCursor.end) {
     const trTokens = sliceTokens(tableTokens, "tr_open", "tr_close", tableCursor)
-    lineResult.push(lineRenderer(trTokens).html)
+    if (trTokens.length) {
+      trTokens.splice(-1, 0, new Token("td_ctrl", "", 0))
+      lineResult.push(lineRenderer(trTokens).html)
+    }
   }
   return [
     "<table>",

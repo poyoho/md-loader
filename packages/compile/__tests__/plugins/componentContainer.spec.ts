@@ -7,10 +7,11 @@ function replaceWhitespace(a: string) {
 const md = `
 :::component
 
-| pr op | ty\`p\`e | def *ault* | req __uire__ | comm _ent_  | asd |
-|-------|----------|------------|--------------|-------------|-----|
-| abcd  | number   | 1          | true         | \`comment\` | asd |
-| efgh  | number   | 2          | true         | \`comment\` | zxc |
+| pr op | ty\`p\`e | def *ault* | req __uire__ | comm _ent_   | asd |
+|-------|----------|------------|--------------|--------------|-----|
+| abcd  | number   | 1          | true         | \`comment1\` | asd |
+| efgh  | number   | 2          | true         | \`comment2\` | zxc |
+| jklm  | string   | 3          | true         | \`comment3\` | qwe |
 
 :::
 `
