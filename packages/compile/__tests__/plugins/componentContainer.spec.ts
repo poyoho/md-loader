@@ -7,7 +7,7 @@ function replaceWhitespace(a: string) {
 const md = `
 :::component
 
-| pr op | ty\`p\`e        | def *ault*     | req __uire__ | comm _ent_   | asd |
+| pr op | ty \`p\` e      | def *ault*     | req __uire__ | comm _ent_   | asd |
 |-------|-----------------|----------------|--------------|--------------|-----|
 | abcd  | number          | 1              | true         | \`comment1\` | asd |
 | efgh  | boolean         | false          | true         | \`comment2\` | zxc |
@@ -22,7 +22,7 @@ const h5 = `
 <div class="component-block"><table><thead>
 <tr>
 <th>pr op</th>
-<th>ty<code>p</code>e</th>
+<th>ty <code>p</code> e</th>
 <th>def <em>ault</em></th>
 <th>req <strong>uire</strong></th>
 <th>comm <em>ent</em></th>
@@ -45,7 +45,7 @@ const h5 = `
 <td><code>comment2</code></td>
 <td>zxc</td>
 <td class="control" key="efgh" require="true">
-<select><option value="boolean">boolean</option></select></td></tr>
+<select><option value="true">true</option><option value="false" selected="selected">false</option></select></td></tr>
 <tr>
 <td>jklm</td>
 <td>string</td>
@@ -61,8 +61,9 @@ const h5 = `
 <td>true</td>
 <td><code>comment4</code></td>
 <td>fgh</td>
-<td class="control" key="nopq" require="true"><select>
-<option value="true">true</option><option value="false">false</option></select></td></tr>
+<td class="control" key="nopq" require="true">
+<select><option value="qwe" selected="selected">qwe</option>
+<option value="Asd">Asd</option><option value="zxc">zxc</option></select></td></tr>
 <tr>
 <td>rstu</td>
 <td>object</td>

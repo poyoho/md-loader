@@ -104,8 +104,8 @@ function renderControler(token: ComponentToken): string {
       return `<textarea>${token.default}</textarea>`
   }
   // a|b|c => option
-  if (/|/.test(token.type) || token.type === "boolean") {
-    const options = token.type === "boolean" ? token.type.split("|", -1) : ["true", "false"]
+  if (/\|/.test(token.type) || token.type === "boolean") {
+    const options = token.type === "boolean" ? ["true", "false"] : token.type.split("|", -1)
     return `<select>${options.map(key => {
       if (token.default === key) {
         return `<option value="${key}" selected="selected">${key}</option>`
