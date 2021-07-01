@@ -39,7 +39,6 @@ type renderFn = (
 
 function renderTableCollectText(md: MarkdownIt, spliteType: string, appendToken: Record<string, renderFn>) {
   const _rules = md.renderer.rules
-
   let keys = [] as string[]
   let formatedKeys = [] as string[]
   const UNEXPECTED_WORD = /[-_ ]/g
@@ -53,16 +52,18 @@ function renderTableCollectText(md: MarkdownIt, spliteType: string, appendToken:
   }
 
   ;['code_inline', 'text'].forEach(tokenType => collectText(tokenType))
-  md.renderer.rules["splite"] = (token, idx) => {
-    keys.push(token[idx].content)
+  md.renderer.rules["splite"] = () => {
+    formatedKeys.push(keys.join(""))
+    keys = []
     return ""
   }
   for(const tokenType in appendToken) {
     const rule = appendToken[tokenType]
     md.renderer.rules[tokenType] = (token, idx, opts, env, self) => {
-      formatedKeys = keys.join("").split("|")
+      const result = rule(formatedKeys, token, idx, opts, env, self)
       keys = [] // clear keys
-      return rule(formatedKeys, token, idx, opts, env, self)
+      formatedKeys = []
+      return result
     }
   }
 
@@ -70,10 +71,7 @@ function renderTableCollectText(md: MarkdownIt, spliteType: string, appendToken:
   return (tokens: Token[]) => {
     tokens = tokens.reduce((prev, next) => {
       if (next.type === spliteType) {
-        const token = new Token("splite", "", 0)
-        token.content = "|"
-        token.hidden = true
-        prev.push(token)
+        prev.push(new Token("splite", "", 0))
       }
       prev.push(next)
       return prev
@@ -81,22 +79,21 @@ function renderTableCollectText(md: MarkdownIt, spliteType: string, appendToken:
 
     const html = md.renderer.render(tokens, md.options, {})
     md.renderer.rules = _rules
-    return {
-      html,
-      keys: formatedKeys
-    }
+    return html
   }
 }
 
 function renderHeader(md: MarkdownIt, tokens: Token[], supportTableColumn: string[]) {
+  let _thKeys = [] as string[]
   const res = renderTableCollectText(md, "th_close", {
-    th_ctrl: () => {
+    th_ctrl: (thKeys) => {
+      _thKeys = thKeys
       return "<th>🛠</th>"
     }
   })(tokens)
   return {
-    ...res,
-    keys: res.keys.map((key => (supportTableColumn.includes(key) ? key : "")))
+    html: res,
+    keys: _thKeys.map(key => (supportTableColumn.includes(key) ? key : ""))
   }
 }
 
@@ -107,12 +104,16 @@ function renderControler(token: ComponentToken): string {
     case "string":
       return `<input type="text" />`
     case "boolean":
-      return `<input text="boolean" />`
-    case "option":
-      return `<input type="option" />`
-    default:
-      return ""
+      return `<select><option value="true">true</option><option value="false">false</option></select>`
+    case "object":
+      return `<textarea></textarea>`
   }
+  // a|b|c => option
+  if (/|/.test(token.type)) {
+    const options = token.type.split("|", -1).map(key => `<option value="${key}">${key}</option>`).join("")
+    return `<select>${options}</select>`
+  }
+  return ""
 }
 
 function renderLineser(md: MarkdownIt, thKeys: string[]) {
@@ -151,7 +152,7 @@ function renderTable(
     const trTokens = sliceTokens(tableTokens, "tr_open", "tr_close", tableCursor)
     if (trTokens.length) {
       trTokens.splice(-1, 0, new Token("td_ctrl", "", 0))
-      lineResult.push(lineRenderer(trTokens).html)
+      lineResult.push(lineRenderer(trTokens))
     }
   }
   return [
