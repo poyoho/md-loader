@@ -4,10 +4,13 @@
 
 ::: component
 
-| pr op | ty\`p\`e | def *ault* | req __uire__ | comm _ent_  | asd |
-|-------|----------|------------|--------------|-------------|-----|
-| abcd  | number   | 1          | true         | \`comment\` | asd |
-| efgh  | number   | 2          | true         | \`comment\` | zxc |
+| pr op | ty\`p\`e        | def *ault*     | req __uire__ | comm _ent_   | asd |
+|-------|-----------------|----------------|--------------|--------------|-----|
+| abcd  | number          | 1              | true         | \`comment1\` | asd |
+| efgh  | boolean         | false          | true         | \`comment2\` | zxc |
+| jklm  | string          | ggsimida       | true         | \`comment3\` | qwe |
+| nopq  | qwe\\|Asd\\|zxc | qwe            | true         | \`comment4\` | fgh |
+| rstu  | object          | {a: "b", c: 1} | true         | \`comment5\` | rty |
 
 :::
 

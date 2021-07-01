@@ -100,18 +100,21 @@ function renderHeader(md: MarkdownIt, tokens: Token[], supportTableColumn: strin
 function renderControler(token: ComponentToken): string {
   switch(token.type) {
     case "number":
-      return `<input type="number" />`
+      return `<input type="number" value="${token.default}" />`
     case "string":
-      return `<input type="text" />`
-    case "boolean":
-      return `<select><option value="true">true</option><option value="false">false</option></select>`
+      return `<input type="text" value="${token.default}"/>`
     case "object":
-      return `<textarea></textarea>`
+      return `<textarea>${token.default}</textarea>`
   }
   // a|b|c => option
-  if (/|/.test(token.type)) {
-    const options = token.type.split("|", -1).map(key => `<option value="${key}">${key}</option>`).join("")
-    return `<select>${options}</select>`
+  if (/|/.test(token.type) || token.type === "boolean") {
+    const options = token.type === "boolean" ? token.type.split("|", -1) : ["true", "false"]
+    return `<select>${options.map(key => {
+      if (token.default === key) {
+        return `<option value="${key}" selected="selected">${key}</option>`
+      }
+      return `<option value="${key}">${key}</option>`
+    }).join("")}</select>`
   }
   return ""
 }
@@ -124,7 +127,7 @@ function renderLineser(md: MarkdownIt, thKeys: string[]) {
         key && (prev[key] = next)
         return prev
       }, {} as ComponentToken)
-      return `<td>${renderControler(token)}</td>`
+      return `<td class="control" key="${token.prop}" require="${token.require}">${renderControler(token)}</td>`
     }
   })
 }

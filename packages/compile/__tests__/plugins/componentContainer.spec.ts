@@ -37,7 +37,7 @@ const h5 = `
 <td>true</td>
 <td><code>comment1</code></td>
 <td>asd</td>
-<td><input type="number" /></td></tr>
+<td class="control" key="abcd" require="true"><input type="number" value="1" /></td></tr>
 <tr>
 <td>efgh</td>
 <td>boolean</td>
@@ -45,7 +45,7 @@ const h5 = `
 <td>true</td>
 <td><code>comment2</code></td>
 <td>zxc</td>
-<td><select><option value="true">true</option><option value="false">false</option></select></td></tr>
+<td class="control" key="efgh" require="true"><select><option value="boolean">boolean</option></select></td></tr>
 <tr>
 <td>jklm</td>
 <td>string</td>
@@ -53,7 +53,7 @@ const h5 = `
 <td>true</td>
 <td><code>comment3</code></td>
 <td>qwe</td>
-<td><input type="text" /></td></tr>
+<td class="control" key="jklm" require="true"><input type="text" value="ggsimida"/></td></tr>
 <tr>
 <td>nopq</td>
 <td>qwe|Asd|zxc</td>
@@ -61,10 +61,8 @@ const h5 = `
 <td>true</td>
 <td><code>comment4</code></td>
 <td>fgh</td>
-<td>
-<select><option value="qwe">qwe</option>
-<option value="Asd">Asd</option>
-<option value="zxc">zxc</option></select></td></tr>
+<td class="control" key="nopq" require="true">
+<select><option value="true">true</option><option value="false">false</option></select></td></tr>
 <tr>
 <td>rstu</td>
 <td>object</td>
@@ -72,7 +70,7 @@ const h5 = `
 <td>true</td>
 <td><code>comment5</code></td>
 <td>rty</td>
-<td><textarea></textarea></td></tr>
+<td class="control" key="rstu" require="true"><textarea>{a:"b",c:1}</textarea></td></tr>
 </table></div>
 `
 
@@ -81,6 +79,7 @@ describe("markdown render", () => {
     modules:{component:true}
   })
   it("markdown container", () => {
+    // console.log(renderer.render(md).html)
     expect(replaceWhitespace((renderer.render(md)).html)).toContain(replaceWhitespace(h5))
   })
 })
