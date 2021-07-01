@@ -3,7 +3,6 @@ import Renderer from "markdown-it/lib/renderer"
 import Token from "markdown-it/lib/token"
 import MarkdownItContainer from "markdown-it-container"
 interface Cursor {
-  start: number
   end: number
 }
 
@@ -16,16 +15,14 @@ interface ComponentToken {
 }
 
 function sliceTokens(tokens: Token[], startTokenType: string, endTokenType: string, cursor?: Cursor) {
-  const _tokens = cursor ? tokens.slice(cursor.end) : tokens
+  const _tokens = cursor ? tokens.slice(cursor.end + 1) : tokens
   const startIdx = _tokens.findIndex(token => token.type === startTokenType)
-  const endIdx = _tokens.findIndex(token => token.type === endTokenType) + 1
+  const endIdx = _tokens.findIndex(token => token.type === endTokenType)
   if (cursor) {
     const isNotFinded = startIdx === -1 || endIdx === -1
-    const lastEnd = cursor.end
-    cursor.start = isNotFinded ? tokens.length : lastEnd + startIdx
-    cursor.end = isNotFinded ? tokens.length : cursor.start + endIdx
+    cursor.end = isNotFinded ? tokens.length : cursor.end + 1 + endIdx
   }
-  return _tokens.splice(startIdx, endIdx)
+  return _tokens.slice(startIdx, endIdx + 1) // startTokenType ~ endTokenType
 }
 
 type renderFn = (
@@ -139,14 +136,15 @@ function renderTable(
 ) {
   const tableCursor = {start: 0, end: 0}
   // table header
-  const threadTokens = sliceTokens(tableTokens, "thead_open", "thead_close", tableCursor)
+  const theadTokens = sliceTokens(tableTokens, "thead_open", "thead_close", tableCursor)
   // <thead><tr> (insert in this) </tr></thead>
-  threadTokens.splice(-3, 0, new Token("th_ctrl", "", 0))
+  theadTokens.splice(-2, 0, new Token("th_ctrl", "", 0))
   const thResult = renderHeader(
     md,
-    threadTokens,
+    theadTokens,
     supportTableColumn
   )
+
 
   // table
   const lineResult = [] as string[]
@@ -161,7 +159,9 @@ function renderTable(
   return [
     "<table>",
     thResult.html,
+    "<tbody>",
     lineResult.join(""),
+    "</tbody>",
     "</table>"
   ].join("")
 }

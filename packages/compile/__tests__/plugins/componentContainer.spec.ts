@@ -29,8 +29,7 @@ const h5 = `
 <th>asd</th>
 <th>🛠</th></tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>abcd</td>
 <td>number</td>
 <td>1</td>
@@ -45,7 +44,8 @@ const h5 = `
 <td>true</td>
 <td><code>comment2</code></td>
 <td>zxc</td>
-<td class="control" key="efgh" require="true"><select><option value="boolean">boolean</option></select></td></tr>
+<td class="control" key="efgh" require="true">
+<select><option value="boolean">boolean</option></select></td></tr>
 <tr>
 <td>jklm</td>
 <td>string</td>
@@ -61,8 +61,8 @@ const h5 = `
 <td>true</td>
 <td><code>comment4</code></td>
 <td>fgh</td>
-<td class="control" key="nopq" require="true">
-<select><option value="true">true</option><option value="false">false</option></select></td></tr>
+<td class="control" key="nopq" require="true"><select>
+<option value="true">true</option><option value="false">false</option></select></td></tr>
 <tr>
 <td>rstu</td>
 <td>object</td>
@@ -71,7 +71,7 @@ const h5 = `
 <td><code>comment5</code></td>
 <td>rty</td>
 <td class="control" key="rstu" require="true"><textarea>{a:"b",c:1}</textarea></td></tr>
-</table></div>
+</tbody></table></div>
 `
 
 describe("markdown render", () => {
