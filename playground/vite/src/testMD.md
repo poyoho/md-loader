@@ -4,10 +4,10 @@
 
 ::: component
 
-| pr op | ty\`p\`e | *default* | __require__ | _comment_   | asd |
-|-------|----------|-----------|-------------|-------------|-----|
-| abcd  | number   | 1         | true        | \`comment\` | asd |
-| efgh  | number   | 2         | true        | \`comment\` | zxc |
+| pr op | ty\`p\`e | def *ault* | req __uire__ | comm _ent_  | asd |
+|-------|----------|------------|--------------|-------------|-----|
+| abcd  | number   | 1          | true         | \`comment\` | asd |
+| efgh  | number   | 2          | true         | \`comment\` | zxc |
 
 :::
 
