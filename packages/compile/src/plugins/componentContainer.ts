@@ -19,7 +19,7 @@ interface ComponentToken {
   require: string
 }
 
-function formatType (tokenType: string) {
+function formatType(tokenType: string) {
   const maped = TYPE_MAP[tokenType]
   if (maped) {
     return maped
@@ -28,11 +28,11 @@ function formatType (tokenType: string) {
   }
 }
 
-function genControler (token: ComponentToken) {
+function genControler(token: ComponentToken) {
   let html = ""
   let options = [] as string[]
   const type = formatType(token.type)
-  switch(type) {
+  switch (type) {
     case "number":
       html = `<input type="number" value="${token.default}" />`
       break
@@ -63,7 +63,7 @@ function genControler (token: ComponentToken) {
   }
 }
 
-function genClassName (tokenType: string, value: string) {
+function genClassName(tokenType: string, value: string) {
   switch (tokenType) {
     case "type":
       return `class="${tokenType}-${formatType(value)}"`
@@ -129,7 +129,7 @@ function renderTable(
       return "<td>" + sliceResult + "</td>"
     },
     td_ctrl: () => {
-      const token = tdKeys.reduce((prev, next, idx)=> {
+      const token = tdKeys.reduce((prev, next, idx) => {
         const key = thKeys[idx]
         key && (prev[key] = next)
         return prev
@@ -143,7 +143,7 @@ function renderTable(
     }
   })
 
-  const tableCursor = {end: 0}
+  const tableCursor = { end: 0 }
   // table header
   const theadTokens = sliceTokens(tableTokens, "thead_open", "thead_close", tableCursor)
   // <thead><tr> (insert in this) </tr></thead>
@@ -151,7 +151,7 @@ function renderTable(
   const thResult = renderer.render(theadTokens)
 
   const lineResult = [] as string[]
-  while(tableTokens.length > tableCursor.end) {
+  while (tableTokens.length > tableCursor.end) {
     const trTokens = sliceTokens(tableTokens, "tr_open", "tr_close", tableCursor)
     if (trTokens.length) {
       // <td_open></td_close>...<td_ctrl />
@@ -171,7 +171,7 @@ function renderTable(
 
 export function ComponentContainer(
   md: MarkdownIt,
-  supportTableColumn = [ 'prop', 'type', 'default', 'require' ]
+  supportTableColumn = ['prop', 'type', 'default', 'require']
 ) {
   let componentName = "component-block"
   md.renderer.rules.component_container_block = () => ""
@@ -192,7 +192,7 @@ export function ComponentContainer(
         tableTokens.forEach(token => token.type = 'component_container_block')
         return [
           `<component-block class="component-block">`,
-          `<${componentName} slot="component" />`,
+          `<div slot="component"><${componentName} /></div>`,
           table,
         ].join("")
       }

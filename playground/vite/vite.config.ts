@@ -8,7 +8,7 @@ export default defineConfig({
       vueCompile: {
         template: {
           compilerOptions: {
-            isCustomElement: (tag) => tag === "demo-block"
+            isCustomElement: (tag) => ["demo-block", "component-block"].includes(tag)
           }
         }
       }
