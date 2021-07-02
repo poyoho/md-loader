@@ -11,7 +11,6 @@ interface ComponentToken {
   type: string
   default: string
   require: string
-  comment: string
 }
 
 function sliceTokens(tokens: Token[], startTokenType: string, endTokenType: string, cursor?: Cursor) {
@@ -94,26 +93,42 @@ function renderHeader(md: MarkdownIt, tokens: Token[], supportTableColumn: strin
   }
 }
 
-function renderControler(token: ComponentToken): string {
+function renderControler(token: ComponentToken) {
+  let html = ""
+  let type = ""
   switch(token.type) {
     case "number":
-      return `<input type="number" value="${token.default}" />`
+      html = `<input type="number" value="${token.default}" />`
+      type = "number"
+      break
     case "string":
-      return `<input type="text" value="${token.default}"/>`
+      html = `<input type="text" value="${token.default}"/>`
+      type = "string"
+      break
     case "object":
-      return `<textarea>${token.default}</textarea>`
+      html = `<textarea>${token.default}</textarea>`
+      type = "object"
+      break
   }
   // a|b|c => option
   if (/\|/.test(token.type) || token.type === "boolean") {
-    const options = token.type === "boolean" ? ["true", "false"] : token.type.split("|", -1)
-    return `<select>${options.map(key => {
+    let options = ["true", "false"]
+    type = "boolean"
+    if (token.type !== "boolean") {
+      type = "option"
+      options = token.type.split("|", -1)
+    }
+    html = `<select>${options.map(key => {
       if (token.default === key) {
         return `<option value="${key}" selected="selected">${key}</option>`
       }
       return `<option value="${key}">${key}</option>`
     }).join("")}</select>`
   }
-  return ""
+  return {
+    html,
+    type
+  }
 }
 
 function renderLineser(md: MarkdownIt, thKeys: string[]) {
@@ -124,7 +139,8 @@ function renderLineser(md: MarkdownIt, thKeys: string[]) {
         key && (prev[key] = next)
         return prev
       }, {} as ComponentToken)
-      return `<td class="control" key="${token.prop}" require="${token.require}">${renderControler(token)}</td>`
+      const result = renderControler(token)
+      return `<td class="control ${result.type}" key="${token.prop}" require="${token.require}">${result.html}</td>`
     }
   })
 }

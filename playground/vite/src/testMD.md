@@ -3,7 +3,7 @@
 
 :::component
 
-| pr op | ty \`p\` e    | def *ault*     | req __uire__ | comm _ent_ | asd |
+| pr op | ty `p` e      | def *ault*     | req __uire__ | comm _ent_ | asd |
 |-------|---------------|----------------|--------------|------------|-----|
 | abcd  | number        | 1              | true         | `comment1` | asd |
 | efgh  | boolean       | false          | true         | `comment2` | zxc |
@@ -106,3 +106,4 @@ Some nice text
 ### Sub heading 2
 #### Sub heading 2
 Some even nicer text
+
