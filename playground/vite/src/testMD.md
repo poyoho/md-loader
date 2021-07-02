@@ -1,18 +1,18 @@
 # 12
-# 1
 
-:::component asd
+## 1
 
-| pr op | ty `p` e      | def *ault*     | req __uire__ | comm _ent_ | asd |
-|-------|---------------|----------------|--------------|------------|-----|
-| abcd  | number        | 1              | true         | `comment1` | asd |
-| efgh  | boolean       | false          | true         | `comment2` | zxc |
-| jklm  | string        | ggsimida       | false        | `comment3` | qwe |
-| nopq  | qwe\|Asd\|zxc | qwe            | true         | `comment4` | fgh |
-| rstu  | object        | {a: "b", c: 1} | true         | `comment5` | rty |
+:::component component-test
+
+| pr op        | ty `p` e      | def *ault*     | req __uire__ | comm _ent_ | asd |
+| ------------ | ------------- | -------------- | ------------ | ---------- | --- |
+| test-number  | number        | 1              | true         | `comment1` | asd |
+| test-boolean | boolean       | false          | true         | `comment2` | zxc |
+| test-string  | string        | ggsimida       | false        | `comment3` | qwe |
+| test-option  | qwe\|Asd\|zxc | qwe            | true         | `comment4` | fgh |
+| test-object  | object        | {a: "b", c: 1} | true         | `comment5` | rty |
 
 :::
-
 
 ::: demo
 
@@ -52,7 +52,7 @@ const a = "12"
 bbbb
 
 | asd | bbb |
-|-----|-----|
+| --- | --- |
 | asd | bbb |
 | asd | bbb |
 | asd | bbb |
@@ -85,7 +85,7 @@ asdasdasd
 [Home](https://www.baidu.com)
 
 | Tables        |      Are      |  Cool |
-|:--------------|:-------------:|------:|
+| :------------ | :-----------: | ----: |
 | col 3 is      | right-aligned | $1600 |
 | col 2 is      |   centered    |   $12 |
 | zebra stripes |   are neat    |    $1 |
