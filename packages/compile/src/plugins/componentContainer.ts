@@ -1,7 +1,8 @@
 import MarkdownIt from "markdown-it"
-import Renderer from "markdown-it/lib/renderer"
 import Token from "markdown-it/lib/token"
 import MarkdownItContainer from "markdown-it-container"
+
+import { customRenderer, sliceTokens } from "../utils/mockRender"
 
 const TYPE_MAP = {
   "number": "number",
@@ -11,70 +12,11 @@ const TYPE_MAP = {
 }
 const OPTION_SPLITE = /\|/
 
-interface Cursor {
-  end: number
-}
-
 interface ComponentToken {
   prop: string
   type: string
   default: string
   require: string
-}
-
-type renderFn = (
-  collectText: string,
-  collectTextHtml: string
-) => [string, boolean]
-
-function sliceTokens(tokens: Token[], startTokenType: string, endTokenType: string, cursor?: Cursor) {
-  const _tokens = cursor ? tokens.slice(cursor.end + 1) : tokens
-  const startIdx = _tokens.findIndex(token => token.type === startTokenType)
-  const endIdx = _tokens.findIndex(token => token.type === endTokenType)
-  if (cursor) {
-    const isNotFinded = startIdx === -1 || endIdx === -1
-    cursor.end = isNotFinded ? tokens.length : cursor.end + 1 + endIdx
-  }
-  return _tokens.slice(startIdx, endIdx + 1) // startTokenType ~ endTokenType
-}
-
-function renderTableCollectText(md: MarkdownIt, defineRules: Record<string, renderFn>) {
-  const initRules = Object.assign({}, md.renderer.rules) as Renderer.RenderRuleRecord
-  const definedRules = Object.assign({}, md.renderer.rules) as Renderer.RenderRuleRecord
-  const UNEXPECT_CHAR = /[ ]/g
-  let collectText = [] as string[]
-  let collectTextHtml = [] as string[]
-
-  // collect
-  ;['code_inline', 'text'].forEach((tokenType: string) => {
-    const _cache = initRules[tokenType]!
-    definedRules[tokenType] = (token, idx, opts, env, self) => {
-      const result = _cache(token, idx, opts, env, self)
-      collectText.push(token[idx].content.replace(UNEXPECT_CHAR, ""))
-      collectTextHtml.push(result)
-      return ""
-    }
-  })
-
-  // consume
-  for (const tokenType in defineRules) {
-    const rule = defineRules[tokenType]
-    definedRules[tokenType] = () => {
-      const [result, clear] = rule(collectText.join(""), collectTextHtml.join(""))
-      if (clear) {
-        collectText = []
-        collectTextHtml = []
-      }
-      return result
-    }
-  }
-
-  return (tokens: Token[]) => {
-    md.renderer.rules = definedRules
-    const html = md.renderer.render(tokens, md.options, {})
-    md.renderer.rules = initRules
-    return html
-  }
 }
 
 function formatType (tokenType: string) {
@@ -139,41 +81,45 @@ function renderTable(
   tableTokens: Token[],
   supportTableColumn: string[]
 ) {
-  const tableCursor = {start: 0, end: 0}
-  // table header
-  const theadTokens = sliceTokens(tableTokens, "thead_open", "thead_close", tableCursor)
-  // <thead><tr> (insert in this) </tr></thead>
-  theadTokens.splice(-2, 0, new Token("th_ctrl", "", 0))
-  let thKeys = [] as string[]
-  const thResult = renderTableCollectText(md, {
-    th_open: () => {
-      return ["", false]
+  let thKeys: string[] = []
+  let tdKeys: string[] = []
+  let collectText: string[] = []
+  const UNEXPECT_CHAR = /[ ]/g
+  let idx = 0
+  const renderer = customRenderer(md, {
+    // collect text
+    code_inline: (defaultResult, token, idx) => {
+      collectText.push(token[idx].content.replace(UNEXPECT_CHAR, ""))
+      return defaultResult()
     },
-    th_close: (collectText, collectTextHtml) => {
-      thKeys.push(collectText)
-      return [`<th>${collectTextHtml}</th>`, true]
+    text: (defaultResult, token, idx) => {
+      collectText.push(token[idx].content.replace(UNEXPECT_CHAR, ""))
+      return defaultResult()
+    },
+    // thead
+    th_close: (defaultResult) => {
+      thKeys.push(collectText.join(""))
+      collectText = []
+      return defaultResult()
     },
     th_ctrl: () => {
       thKeys = thKeys.filter((token) => (supportTableColumn.includes(token) ? token : ""))
-      return ["<th>🛠</th>", true]
+      return "<th>🛠</th>"
     },
-  })(theadTokens)
-
-  // table
-  let tdKeys = [] as string[]
-  let idx = -1
-  // <td_open></td_close>...<td_ctrl />
-  const lineRenderer = renderTableCollectText(md, {
+    // td
     td_open: () => {
-      return ["", false]
+      renderer.collectStart()
+      return ""
     },
-    td_close: (collectText, collectTextHtml) => {
-      idx++
-      tdKeys.push(collectText)
+    td_close: (defaultResult) => {
+      const sliceResult = renderer.collectEnd()
+      const text = collectText.join("")
+      tdKeys.push(text)
+      collectText = []
       if (thKeys[idx]) {
-        return [`<td ${genClassName(thKeys[idx], collectText)}>${collectTextHtml}</td>`, true]
+        return `<td ${genClassName(thKeys[idx++], text)}>${sliceResult}${defaultResult()}`
       }
-      return [`<td>${collectTextHtml}</td>`, true]
+      return "<td>" + sliceResult + defaultResult()
     },
     td_ctrl: () => {
       const token = tdKeys.reduce((prev, next, idx)=> {
@@ -183,21 +129,27 @@ function renderTable(
       }, {} as ComponentToken)
       // reset
       tdKeys = []
-      idx = -1
+      idx = 0
       const result = genControler(token)
       const isRequire = token.require === "true" ? "require" : ""
-      return [
-        `<td class="control ${result.type}" key="${token.prop}" ${isRequire}>${result.html}</td>`,
-        true
-      ]
+      return `<td class="control ${result.type}" key="${token.prop}" ${isRequire}>${result.html}</td>`
     }
   })
+
+  const tableCursor = {end: 0}
+  // table header
+  const theadTokens = sliceTokens(tableTokens, "thead_open", "thead_close", tableCursor)
+  // <thead><tr> (insert in this) </tr></thead>
+  theadTokens.splice(-2, 0, new Token("th_ctrl", "", 0))
+  const thResult = renderer.render(theadTokens)
+
   const lineResult = [] as string[]
   while(tableTokens.length > tableCursor.end) {
     const trTokens = sliceTokens(tableTokens, "tr_open", "tr_close", tableCursor)
     if (trTokens.length) {
+      // <td_open></td_close>...<td_ctrl />
       trTokens.splice(-1, 0, new Token("td_ctrl", "", 0))
-      lineResult.push(lineRenderer(trTokens))
+      lineResult.push(renderer.render(trTokens))
     }
   }
   return [
