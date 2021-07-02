@@ -1,0 +1,23 @@
+.component-block td.require{
+  color: aqua;
+}
+
+.component-block td.type-string {
+  color: red;
+}
+
+.component-block td.type-number {
+  color: yellow;
+}
+
+.component-block td.type-boolean {
+  color: blue;
+}
+
+.component-block td.type-object {
+  color: green;
+}
+
+.component-block td.type-option {
+  color: gray;
+}
