@@ -1,23 +1,65 @@
-.component-block td.require{
-  color: aqua;
+.component-block td .require {
+  background: #CCFF99;
+  border-radius: 5px;
+  text-align: center;
 }
 
-.component-block td.type-string {
-  color: red;
+.component-block td .no-require {
+  background: #FF6666;
+  border-radius: 5px;
+  text-align: center;
 }
 
-.component-block td.type-number {
-  color: yellow;
+.component-block td .type-string {
+  background: #FFFFCC;
+  border-radius: 5px;
+  text-align: center;
 }
 
-.component-block td.type-boolean {
-  color: blue;
+.component-block td .type-number {
+  background: #CCFFFF;
+  border-radius: 5px;
+  text-align: center;
+  padding: 3px;
 }
 
-.component-block td.type-object {
-  color: green;
+.component-block td .type-boolean {
+  background: #FFCCCC;
+  border-radius: 5px;
+  text-align: center;
+  padding: 3px;
 }
 
-.component-block td.type-option {
-  color: gray;
+.component-block td .type-object {
+  background: #99CCCC;
+  border-radius: 5px;
+  text-align: center;
+  padding: 3px;
+}
+
+.component-block td .type-option {
+  background: #CCCCFF;
+  border-radius: 5px;
+  text-align: center;
+  padding: 3px;
+}
+
+
+.component-block td.control input, 
+.component-block td.control select,
+.component-block td.control textarea {
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #dfe2e5;
+  background: transparent;
+  outline: none;
+  padding-left: 10px;
+  line-height: 20px;
+}
+
+.component-block td.control textarea:focus,
+.component-block td.control select:focus,
+.component-block td.control input:focus {
+  border: 1px solid #2cb1fd;
+  box-shadow: 0 0 3px 1px #2cb1fd;
 }

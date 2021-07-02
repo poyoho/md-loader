@@ -1,7 +1,7 @@
 # 12
 # 1
 
-:::component
+:::component asd
 
 | pr op | ty `p` e      | def *ault*     | req __uire__ | comm _ent_ | asd |
 |-------|---------------|----------------|--------------|------------|-----|

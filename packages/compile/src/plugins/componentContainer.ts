@@ -71,6 +71,13 @@ function genClassName (tokenType: string, value: string) {
       if (value === "true") {
         return `class="${tokenType}"`
       }
+      return `class="no-require"`
+    case "default":
+      if (value === "true") {
+        return `class="require"`
+      } else if (value === "false") {
+        return `class="no-require"`
+      }
       return ""
   }
   return `class="${tokenType}"`
@@ -111,15 +118,15 @@ function renderTable(
       renderer.collectStart()
       return ""
     },
-    td_close: (defaultResult) => {
+    td_close: () => {
       const sliceResult = renderer.collectEnd()
       const text = collectText.join("")
       tdKeys.push(text)
       collectText = []
       if (thKeys[idx]) {
-        return `<td ${genClassName(thKeys[idx++], text)}>${sliceResult}${defaultResult()}`
+        return `<td><div ${genClassName(thKeys[idx++], text)}>${sliceResult}</div></td>`
       }
-      return "<td>" + sliceResult + defaultResult()
+      return "<td>" + sliceResult + "</td>"
     },
     td_ctrl: () => {
       const token = tdKeys.reduce((prev, next, idx)=> {
@@ -153,7 +160,7 @@ function renderTable(
     }
   }
   return [
-    "<table>",
+    `<table slot="descript">`,
     thResult,
     "<tbody>",
     lineResult.join(""),
@@ -166,9 +173,14 @@ export function ComponentContainer(
   md: MarkdownIt,
   supportTableColumn = [ 'prop', 'type', 'default', 'require' ]
 ) {
+  let componentName = "component-block"
   md.renderer.rules.component_container_block = () => ""
   // :::component container
   md.use(MarkdownItContainer, "component", {
+    validate(params: string) {
+      componentName = params.replace(/\bcomponent\b\s+/, "").trim()
+      return true
+    },
     render(tokens: Token[], idx: number) {
       if (tokens[idx].nesting === 1) {
         const currentTokens = tokens.slice(
@@ -179,11 +191,12 @@ export function ComponentContainer(
         const table = renderTable(md, tableTokens, supportTableColumn)
         tableTokens.forEach(token => token.type = 'component_container_block')
         return [
-          `<div class="component-block">`,
+          `<component-block class="component-block">`,
+          `<${componentName} slot="component" />`,
           table,
         ].join("")
       }
-      return "</div>"
+      return "</component-block>"
     },
   })
 }
