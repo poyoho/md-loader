@@ -1,4 +1,6 @@
+import { getShadowHost } from "../utils/shadow"
 import teamplateElement from "./demo-block-element"
+
 interface State {
   expaned: boolean
   height: number
@@ -10,14 +12,6 @@ interface State {
 }
 
 const states = new WeakMap<DemoBlockElement, State>()
-
-function getShadowHost(el: HTMLElement) {
-  const rootNode = el.getRootNode()
-  if (!(rootNode instanceof ShadowRoot)) {
-    return el
-  }
-  return rootNode.host
-}
 
 function expandContract(e: Event) {
   const target = e.target! as HTMLElement
@@ -58,7 +52,7 @@ function resetCopyIcon(e: Event) {
 export default class DemoBlockElement extends HTMLElement {
   constructor() {
     super()
-    const shadowRoot = this.attachShadow({mode: "open"})
+    const shadowRoot = this.attachShadow({ mode: "open" })
     const wrap = this.ownerDocument.createElement("div")
     wrap.innerHTML = teamplateElement
     shadowRoot.appendChild(wrap)

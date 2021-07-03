@@ -11,17 +11,12 @@ const TYPE_MAP = {
   "boolean": "boolean",
 }
 const OPTION_SPLITE = /\|/
-const CAMELIZE_RE = /-(\w)/g
 
 interface ComponentToken {
   prop: string
   type: string
   default: string
   require: string
-}
-
-export const camelize = (str: string): string => {
-  return str.replace(CAMELIZE_RE, (_, c) => (c ? c.toUpperCase() : ''))
 }
 
 function formatType(tokenType: string) {
@@ -36,16 +31,17 @@ function formatType(tokenType: string) {
 function genControler(token: ComponentToken) {
   let html = ""
   let options = [] as string[]
+  const requireAttr = token.require === "true" ? "required" : ""
   const type = formatType(token.type)
   switch (type) {
     case "number":
-      html = `<input type="number" value="${token.default}" />`
+      html = `<input prop="${token.prop}" type="number" value="${token.default}" ${requireAttr}/>`
       break
     case "string":
-      html = `<input type="text" value="${token.default}"/>`
+      html = `<input prop="${token.prop}" type="text" value="${token.default}" ${requireAttr}/>`
       break
     case "object":
-      html = `<textarea>${token.default}</textarea>`
+      html = `<textarea prop="${token.prop}" ${requireAttr}>${token.default}</textarea>`
       break
     case "boolean":
       options = ["true", "false"]
@@ -55,7 +51,7 @@ function genControler(token: ComponentToken) {
       break
   }
   if (options.length) {
-    html = `<select>${options.map(key => {
+    html = `<select prop="${token.prop}" ${requireAttr}>${options.map(key => {
       if (token.default === key) {
         return `<option value="${key}" selected="selected">${key}</option>`
       }
@@ -96,7 +92,7 @@ function genDefaultValue(token: ComponentToken) {
   ) {
     val = token.default
   }
-  return camelize(token.prop) + ":" + val + ","
+  return `"${token.prop}"` + ":" + val + ","
 }
 
 function renderTable(
@@ -159,7 +155,7 @@ function renderTable(
       if (isRequire) {
         defaultValueStr += genDefaultValue(token)
       }
-      return `<td class="control ${result.type}" key="${token.prop}" ${isRequire}>${result.html}</td>`
+      return `<td class="control">${result.html}</td>`
     }
   })
 

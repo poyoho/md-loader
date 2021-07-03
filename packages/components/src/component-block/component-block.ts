@@ -10,6 +10,16 @@ interface State {
 
 const states = new WeakMap<ComponentBlockElement, State>()
 
+function tableInput(e: Event) {
+  const state = states.get(<ComponentBlockElement>(<HTMLElement>e.currentTarget).parentNode)!
+  const instance = state.instance
+  const target = e.target as HTMLInputElement
+  const value = target.value
+  const prop = (<HTMLElement>target).getAttribute("prop")!
+  console.log(prop)
+  instance.props[prop] = value
+}
+
 export default class ComponentBlockElement extends HTMLElement {
   constructor() {
     super()
@@ -20,19 +30,17 @@ export default class ComponentBlockElement extends HTMLElement {
   }
 
   connectedCallback() {
-    const descript = this.descript!
-
-    const state = states.get(this)!
-    state.instance.props.testNumber = 2
-    console.log("state", state.instance.props.testNumber)
+    const table = this.table
+    table.addEventListener("input", tableInput)
   }
 
   disconnectedCallback() {
-
+    const table = this.table!
+    table.removeEventListener("input", tableInput)
   }
 
-  get descript() {
-    return this.querySelector<HTMLSlotElement>(".descript")
+  get table() {
+    return this.querySelector("table")!
   }
 }
 
