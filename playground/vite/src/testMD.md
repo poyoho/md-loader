@@ -9,7 +9,7 @@
 | test-number  | number        | 1              | true         | `comment1` | asd |
 | test-boolean | boolean       | false          | true         | `comment2` | zxc |
 | test-string  | string        | ggsimida       | false        | `comment3` | qwe |
-| test-option  | qwe\|Asd\|zxc | qwe            | true         | `comment4` | fgh |
+| test-option  | asd\|zxc\|qwe | "asd"          | true         | `comment4` | fgh |
 | test-object  | object        | {a: "b", c: 1} | true         | `comment5` | rty |
 
 :::

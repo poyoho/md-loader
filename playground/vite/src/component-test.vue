@@ -44,13 +44,12 @@ export default defineComponent({
     },
     testString: {
       type: String,
-      required: true,
       default: "ggsimida"
     },
     testOption: {
-      type: String as PropType<"Asd" | "qwe" | "zxc">,
+      type: String as PropType<"asd" | "qwe" | "zxc">,
       required: true,
-      default: "qwe"
+      default: "asd"
     },
     testObject: {
       type: Object,

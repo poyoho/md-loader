@@ -11,12 +11,17 @@ const TYPE_MAP = {
   "boolean": "boolean",
 }
 const OPTION_SPLITE = /\|/
+const CAMELIZE_RE = /-(\w)/g
 
 interface ComponentToken {
   prop: string
   type: string
   default: string
   require: string
+}
+
+export const camelize = (str: string): string => {
+  return str.replace(CAMELIZE_RE, (_, c) => (c ? c.toUpperCase() : ''))
 }
 
 function formatType(tokenType: string) {
@@ -83,6 +88,17 @@ function genClassName(tokenType: string, value: string) {
   return `class="${tokenType}"`
 }
 
+function genDefaultValue(token: ComponentToken) {
+  let val = `"${token.default}"`
+  if (
+    ["number", "boolean", "object"].includes(token.type)
+    || OPTION_SPLITE.test(token.type)
+  ) {
+    val = token.default
+  }
+  return camelize(token.prop) + ":" + val + ","
+}
+
 function renderTable(
   md: MarkdownIt,
   tableTokens: Token[],
@@ -91,6 +107,7 @@ function renderTable(
   let thKeys: string[] = []
   let tdKeys: string[] = []
   let collectText: string[] = []
+  let defaultValueStr = ""
   const UNEXPECT_CHAR = /[ ]/g
   let idx = 0
   const renderer = customRenderer(md, {
@@ -139,6 +156,9 @@ function renderTable(
       idx = 0
       const result = genControler(token)
       const isRequire = token.require === "true" ? "require" : ""
+      if (isRequire) {
+        defaultValueStr += genDefaultValue(token)
+      }
       return `<td class="control ${result.type}" key="${token.prop}" ${isRequire}>${result.html}</td>`
     }
   })
@@ -159,14 +179,17 @@ function renderTable(
       lineResult.push(renderer.render(trTokens))
     }
   }
-  return [
-    `<table slot="descript">`,
-    thResult,
-    "<tbody>",
-    lineResult.join(""),
-    "</tbody>",
-    "</table>"
-  ].join("")
+  return {
+    html: [
+      `<table slot="descript" class="descript">`,
+      thResult,
+      "<tbody>",
+      lineResult.join(""),
+      "</tbody>",
+      "</table>"
+    ].join(""),
+    defaultValueStr: `{${defaultValueStr.slice(0, defaultValueStr.length - 1)}}`,
+  }
 }
 
 export function ComponentContainer(
@@ -190,10 +213,13 @@ export function ComponentContainer(
         const tableTokens = sliceTokens(currentTokens, "table_open", "table_close")
         const table = renderTable(md, tableTokens, supportTableColumn)
         tableTokens.forEach(token => token.type = 'component_container_block')
+        // console.log("defaultValueStr", table.defaultValueStr)
         return [
-          `<component-block class="component-block">`,
-          `<div slot="component"><${componentName} /></div>`,
-          table,
+          `<component-block class="component-block" ref="_componentBlock">`,
+          `<div slot="component" class="component">`,
+          `<${componentName} ref="_component" v-bind='${table.defaultValueStr}'/>`,
+          `</div>`,
+          table.html,
         ].join("")
       }
       return "</component-block>"

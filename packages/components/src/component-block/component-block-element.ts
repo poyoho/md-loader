@@ -4,9 +4,13 @@ function html(...args: any) {
 
 export default html`
 <div class="component-block">
-  <!-- component -->
-  <slot name="component"></slot>
-  <!-- descript -->
-  <slot name="descript"></slot>
+  <div class="component">
+    <!-- component -->
+    <slot name="component"></slot>
+  </div>
+  <div class="descript">
+    <!-- descript -->
+    <slot name="descript"></slot>
+  </div>
 </div>
 `
