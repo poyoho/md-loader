@@ -6,6 +6,8 @@ interface InstanceObject {
 
 interface State {
   instance: InstanceObject
+
+  propsNode: HTMLElement
 }
 
 const states = new WeakMap<ComponentBlockElement, State>()
@@ -39,9 +41,9 @@ function tableInput(e: Event) {
         value[0] !== "'" && (value = eval(value))
       }
       break
-
   }
   instance.props[prop] = value
+  state.propsNode.textContent = JSON.stringify(instance.props)
 }
 
 export default class ComponentBlockElement extends HTMLElement {
@@ -55,6 +57,11 @@ export default class ComponentBlockElement extends HTMLElement {
 
   connectedCallback() {
     const table = this.table
+    const propsNode = this.props
+
+    const state = states.get(this)!
+    states.set(this, <any>Object.assign(state, { propsNode: propsNode }))
+    propsNode.textContent = JSON.stringify(state.instance.props)
     table.addEventListener("input", tableInput)
   }
 
@@ -66,11 +73,13 @@ export default class ComponentBlockElement extends HTMLElement {
   get table() {
     return this.querySelector("table")!
   }
+
+  get props() {
+    return this.shadowRoot!.querySelector<HTMLElement>(".props")!
+  }
 }
 
 export function provideComponentInstance(el: ComponentBlockElement, instance: InstanceObject) {
-  console.log("instance", instance)
-  const state = states.get(el) || { instance: {} as InstanceObject }
-  state.instance = instance
-  states.set(el, state)
+  const state = states.get(el) || {}
+  states.set(el, <any>Object.assign(state, { instance: instance }))
 }
