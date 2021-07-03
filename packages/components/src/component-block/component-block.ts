@@ -36,6 +36,7 @@ function tableInput(e: Event) {
       {
         const defineType = (<HTMLElement>target).getAttribute("dtype")!
         value = (defineType.match(new RegExp(`'*${value}'*`)) as any)[0]
+        value[0] !== "'" && (value = eval(value))
       }
       break
 
