@@ -17,6 +17,7 @@
   <p>
     <strong>props.testOption:</strong>
     {{ props.testOption }}
+    {{ typeof props.testOption }}
   </p>
   <p>
     <strong>props.testObject:</strong>
@@ -47,7 +48,7 @@ export default defineComponent({
       default: "ggsimida"
     },
     testOption: {
-      type: String as PropType<"asd" | "qwe" | "zxc">,
+      type: [String, Number] as PropType<String | Number>,
       required: true,
       default: "asd"
     },

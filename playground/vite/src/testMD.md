@@ -4,13 +4,13 @@
 
 :::component component-test
 
-| pr op        | ty `p` e      | def *ault*     | req __uire__ | comm _ent_ | asd |
-| ------------ | ------------- | -------------- | ------------ | ---------- | --- |
-| test-number  | number        | 1              | true         | `comment1` | asd |
-| test-boolean | boolean       | false          | true         | `comment2` | zxc |
-| test-string  | string        | ggsimida       | false        | `comment3` | qwe |
-| test-option  | asd\|zxc\|qwe | "asd"          | true         | `comment4` | fgh |
-| test-object  | object        | {a: "b", c: 1} | true         | `comment5` | rty |
+| pr op        | ty `p` e                     | def *ault*     | req __uire__ | comm _ent_ | asd |
+| ------------ | ---------------------------- | -------------- | ------------ | ---------- | --- |
+| test-number  | number                       | 1              | true         | `comment1` | asd |
+| test-boolean | boolean                      | false          | true         | `comment2` | zxc |
+| test-string  | string                       | ggsimida       | false        | `comment3` | qwe |
+| test-option  | "asd" \| "zxc" \| "qwe" \| 1 | 1              | true         | `comment4` | fgh |
+| test-object  | object                       | {a: "b", c: 1} | true         | `comment5` | rty |
 
 :::
 

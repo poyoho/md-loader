@@ -35,23 +35,24 @@ function genControler(token: ComponentToken) {
   const type = formatType(token.type)
   switch (type) {
     case "number":
-      html = `<input ftype="${token.type}" prop="${token.prop}" type="number" value="${token.default}" ${requireAttr}/>`
+      html = `<input ftype="${type}" prop="${token.prop}" type="number" value="${token.default}" ${requireAttr}/>`
       break
     case "string":
-      html = `<input ftype="${token.type}" prop="${token.prop}" type="text" value="${token.default}" ${requireAttr}/>`
+      html = `<input ftype="${type}" prop="${token.prop}" type="text" value="${token.default}" ${requireAttr}/>`
       break
     case "object":
-      html = `<textarea ftype="${token.type}" prop="${token.prop}" ${requireAttr}>${token.default}</textarea>`
+      html = `<textarea ftype="${type}" prop="${token.prop}" ${requireAttr}>${token.default}</textarea>`
       break
     case "boolean":
       options = ["true", "false"]
       break
     case "option":
-      options = token.type.split(OPTION_SPLITE)
+      options = token.type.replace(/['"]/g, "").split(OPTION_SPLITE)
       break
   }
   if (options.length) {
-    html = `<select ftype="${token.type}" prop="${token.prop}" ${requireAttr}>${options.map(key => {
+    const dtype = type === "option" ? `dtype="${token.type.replace(/"/g, "'")}"` : ""
+    html = `<select ftype="${type}" ${dtype} prop="${token.prop}" ${requireAttr}>${options.map(key => {
       if (token.default === key) {
         return `<option value="${key}" selected="selected">${key}</option>`
       }
@@ -86,11 +87,12 @@ function genClassName(tokenType: string, value: string) {
 
 function genDefaultValue(token: ComponentToken) {
   let val = `"${token.default}"`
-  if (
-    ["number", "boolean", "object"].includes(token.type)
-    || OPTION_SPLITE.test(token.type)
-  ) {
+  if (["number", "boolean", "object"].includes(token.type)) {
     val = token.default
+  } else if (OPTION_SPLITE.test(token.type)) {
+    val = token.type
+      .replace("'", "\"")
+      .match(new RegExp(`"*${token.default}"*`)) as any || '""'
   }
   return `"${token.prop}"` + ":" + val + ","
 }

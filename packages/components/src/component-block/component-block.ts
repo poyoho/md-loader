@@ -26,15 +26,20 @@ function tableInput(e: Event) {
       value = Number(value)
       break
     case "object":
-      console.log(value)
-      value = eval(value)
+      try {
+        value = eval(`(${value})`)
+      } catch (e) {
+        // pass
+      }
       break
     case "option":
-      // TODO
+      {
+        const defineType = (<HTMLElement>target).getAttribute("dtype")!
+        value = (defineType.match(new RegExp(`'*${value}'*`)) as any)[0]
+      }
       break
 
   }
-  console.log(prop, type)
   instance.props[prop] = value
 }
 
