@@ -215,9 +215,9 @@ export function ComponentContainer(
         tableTokens.forEach(token => token.type = 'component_container_block')
         // console.log("defaultValueStr", table.defaultValueStr)
         return [
-          `<component-block class="component-block" ref="_componentBlock">`,
+          `<component-block class="component-block" ref="componentBlock">`,
           `<div slot="component" class="component">`,
-          `<${componentName} ref="_component" v-bind='${table.defaultValueStr}'/>`,
+          `<${componentName} v-bind='<!--component-prop: ${table.defaultValueStr} :component-prop-->' />`,
           `</div>`,
           table.html,
         ].join("")

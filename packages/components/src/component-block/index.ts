@@ -2,7 +2,6 @@ import teamplateElement from "./component-block-element"
 
 interface InstanceObject {
   props: Record<string, any>
-  emits: Record<string, any>
 }
 
 interface State {
@@ -23,8 +22,9 @@ export default class ComponentBlockElement extends HTMLElement {
   connectedCallback() {
     const descript = this.descript!
 
-    const state = states.get(this)
-    console.log(state)
+    const state = states.get(this)!
+    state.instance.props.testNumber = 2
+    console.log("state", state.instance.props.testNumber)
   }
 
   disconnectedCallback() {
@@ -37,6 +37,7 @@ export default class ComponentBlockElement extends HTMLElement {
 }
 
 export function provideComponentInstance(el: ComponentBlockElement, instance: InstanceObject) {
+  console.log("instance", instance)
   const state = states.get(el) || { instance: {} as InstanceObject }
   state.instance = instance
   states.set(el, state)
