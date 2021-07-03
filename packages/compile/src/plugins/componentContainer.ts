@@ -35,13 +35,13 @@ function genControler(token: ComponentToken) {
   const type = formatType(token.type)
   switch (type) {
     case "number":
-      html = `<input prop="${token.prop}" type="number" value="${token.default}" ${requireAttr}/>`
+      html = `<input ftype="${token.type}" prop="${token.prop}" type="number" value="${token.default}" ${requireAttr}/>`
       break
     case "string":
-      html = `<input prop="${token.prop}" type="text" value="${token.default}" ${requireAttr}/>`
+      html = `<input ftype="${token.type}" prop="${token.prop}" type="text" value="${token.default}" ${requireAttr}/>`
       break
     case "object":
-      html = `<textarea prop="${token.prop}" ${requireAttr}>${token.default}</textarea>`
+      html = `<textarea ftype="${token.type}" prop="${token.prop}" ${requireAttr}>${token.default}</textarea>`
       break
     case "boolean":
       options = ["true", "false"]
@@ -51,7 +51,7 @@ function genControler(token: ComponentToken) {
       break
   }
   if (options.length) {
-    html = `<select prop="${token.prop}" ${requireAttr}>${options.map(key => {
+    html = `<select ftype="${token.type}" prop="${token.prop}" ${requireAttr}>${options.map(key => {
       if (token.default === key) {
         return `<option value="${key}" selected="selected">${key}</option>`
       }

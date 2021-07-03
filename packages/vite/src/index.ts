@@ -37,7 +37,7 @@ export default function createVueMarkDownPlugin(opts: VueMarkdownOptions = {}) {
     },
 
     // transform markdown to vue template
-    transform (code, id) {
+    transform(code, id) {
       const { filename, query } = parseRequest(id)
       if (!query.component && !/\.md$/.test(filename)) {
         return
@@ -59,7 +59,7 @@ export default function createVueMarkDownPlugin(opts: VueMarkdownOptions = {}) {
     },
 
     // load virtual modules
-    load (id) {
+    load(id) {
       // console.log("load", id);
       const { filename, query } = parseRequest(id)
       if (query.component && !query.vue) { // pass query vue

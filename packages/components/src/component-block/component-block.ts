@@ -14,9 +14,27 @@ function tableInput(e: Event) {
   const state = states.get(<ComponentBlockElement>(<HTMLElement>e.currentTarget).parentNode)!
   const instance = state.instance
   const target = e.target as HTMLInputElement
-  const value = target.value
+  const type = (<HTMLElement>target).getAttribute("ftype")!
   const prop = (<HTMLElement>target).getAttribute("prop")!
-  console.log(prop)
+  let value: any = target.value
+
+  switch (type) {
+    case "boolean":
+      value = value === "true" ? true : false
+      break
+    case "number":
+      value = Number(value)
+      break
+    case "object":
+      console.log(value)
+      value = eval(value)
+      break
+    case "option":
+      // TODO
+      break
+
+  }
+  console.log(prop, type)
   instance.props[prop] = value
 }
 
