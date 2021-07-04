@@ -11,11 +11,11 @@ export default html`
 
   <!-- define block -->
   <ul class="define-block">
-    <li>props</li>
-    <li class="active">descript</li>
-    <li>define</li>
+    <li for="props" class="default">props</li>
+    <li for="define">define</li>
+    <li for="descript">descript</li>
   </ul>
-  <p class="props"></p>
+  <div class="props"></div>
   <div class="descript">
     <!-- descript -->
     <slot name="descript"></slot>
@@ -78,21 +78,18 @@ export default html`
               inset 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
 .define-block li.active {
-  background: #0088ff;
+  background: #52ccf4;
 }
 .define-block li.active:active {
-  box-shadow: inset -2px -2px 8px #0088ff,
-              inset -2px -2px 12px rgba(#0088ff, .5),
-              inset 2px 2px 4px rgba(#0088ff, .1),
-              inset 2px 2px 8px rgba(#0088ff, .15);
+  box-shadow: inset -2px -2px 8px #5eebff,
+              inset -2px -2px 12px #5eebff,
+              inset 2px 2px 4px #46adcf,
+              inset 2px 2px 8px #46adcf;
 }
 .define,
 .descript,
 .props {
   display: none;
-}
-.descript {
-  display: block;
 }
 </style>
 `

@@ -1,3 +1,4 @@
+import { getShadowHost } from "../utils/shadow"
 import teamplateElement from "./component-block-element"
 
 interface InstanceObject {
@@ -7,7 +8,11 @@ interface InstanceObject {
 interface State {
   instance: InstanceObject
 
-  propsNode: HTMLElement
+  activeNode: HTMLElement
+
+  propsBlock: HTMLElement
+  defineBlock: HTMLElement
+  descriptBlock: HTMLElement
 }
 
 const states = new WeakMap<ComponentBlockElement, State>()
@@ -43,7 +48,19 @@ function tableInput(e: Event) {
       break
   }
   instance.props[prop] = value
-  state.propsNode.textContent = JSON.stringify(instance.props)
+  state.propsBlock.textContent = JSON.stringify(instance.props)
+}
+
+function changeActive(e: Event) {
+  const state = states.get(<ComponentBlockElement>getShadowHost(<HTMLElement>e.currentTarget))!
+  const target = e.target as HTMLInputElement
+
+  state[state.activeNode.getAttribute("for")! + "Block"].style.display = "none"
+  state[target.getAttribute("for")! + "Block"].style.display = "block"
+
+  state.activeNode.className = ""
+  target.className = "active"
+  state.activeNode = target
 }
 
 export default class ComponentBlockElement extends HTMLElement {
@@ -57,25 +74,58 @@ export default class ComponentBlockElement extends HTMLElement {
 
   connectedCallback() {
     const table = this.table
-    const propsNode = this.props
+    const nav = this.nav
+    const activeNode = this.defaultNavActive
+    const propsBlock = this.propsBlock
+    const defineBlock = this.defineBlock
+    const descriptBlock = this.descriptBlock
 
-    const state = states.get(this)!
-    states.set(this, <any>Object.assign(state, { propsNode: propsNode }))
-    propsNode.textContent = JSON.stringify(state.instance.props)
+    const state = <any>Object.assign(states.get(this)!, {
+      propsBlock,
+      defineBlock,
+      descriptBlock,
+      activeNode: activeNode,
+    })
+    propsBlock.textContent = JSON.stringify(state.instance.props)
+
+    activeNode.className = "active"
+    state[activeNode.getAttribute("for")! + "Block"].style.display = "block"
+
+    states.set(this, state)
     table.addEventListener("input", tableInput)
+    nav.addEventListener("click", changeActive)
   }
 
   disconnectedCallback() {
     const table = this.table!
+    const nav = this.nav!
+
     table.removeEventListener("input", tableInput)
+    nav.removeEventListener("click", changeActive)
   }
 
   get table() {
     return this.querySelector("table")!
   }
 
-  get props() {
-    return this.shadowRoot!.querySelector<HTMLElement>(".props")!
+  get nav() {
+    return this.shadowRoot!.querySelector<HTMLUListElement>(".define-block")!
+  }
+
+  get defaultNavActive() {
+    return this.shadowRoot!.querySelector(".define-block .default")!
+  }
+
+  get propsBlock() {
+    return this.shadowRoot!.querySelector<HTMLUListElement>(".props")!
+  }
+
+  get defineBlock() {
+    return this.shadowRoot!.querySelector<HTMLUListElement>(".define")!
+  }
+
+  get descriptBlock() {
+    return this.shadowRoot!.querySelector<HTMLUListElement>(".descript")!
   }
 }
 
