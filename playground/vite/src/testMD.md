@@ -4,6 +4,12 @@
 
 :::component component-test
 
+```html
+<component-test>
+  <p>default slot</p>
+<component-test>
+```
+
 | pr op        | ty `p` e                     | def *ault*     | req __uire__ | comm _ent_ | asd |
 | ------------ | ---------------------------- | -------------- | ------------ | ---------- | --- |
 | test-number  | number                       | 1              | true         | `comment1` | asd |
