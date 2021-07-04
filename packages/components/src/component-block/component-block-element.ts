@@ -27,12 +27,16 @@ export default html`
 </div>
 <style>
 .descript,
-.component,
 .props {
   background: #ffffff;
   border: 1px solid #ebebeb;
   padding: 20px;
   border-top: 0;
+}
+.component {
+  background: #ffffff;
+  padding: 20px;
+  border: 1px solid #ebebeb;
 }
 .component-block {
   border: 1px solid #ebebeb;
