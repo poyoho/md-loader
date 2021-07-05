@@ -194,10 +194,13 @@ function renderComponent(md: MarkdownIt, componentName: string, bindAttr: string
   let component = ""
   let define: Token
   if (defineToken) {
+    defineToken.content = defineToken.content.replace(new RegExp(`<${componentName}.*>`), `<${componentName}>`)
     define = defineToken
     component = defineToken.content
-      .replace(/\s/g, "")
-      .replace(`<${componentName}`, `<${componentName} v-bind='<!--component-prop: ${bindAttr} :component-prop-->'`)
+      .replace(
+        `<${componentName}`,
+        `<${componentName} v-bind='<!--component-prop: ${bindAttr} :component-prop-->'`
+      )
   } else {
     define = new Token("fence", "", 0)
     define.info = "html"

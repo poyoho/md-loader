@@ -10,6 +10,7 @@ const md = `
 \`\`\`
 <component-test :test-number="2">
   <p>default slot</p>
+  <component-test :test-number="2" />
 </component-test>
 \`\`\`
 

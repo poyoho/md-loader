@@ -7,6 +7,8 @@
 ```vue
 <component-test :test-number="2">
   <p>default slot</p>
+  <!-- don't change by descript -->
+  <component-test :test-number="2" />
 </component-test>
 ```
 
