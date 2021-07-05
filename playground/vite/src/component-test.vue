@@ -24,6 +24,10 @@
     {{ props.testObject }}
   </p>
   <button @click="click">test-emit{{ data.count }}</button>
+  <div class="test-slot">
+    <p>slot:</p>
+    <slot></slot>
+  </div>
 </template>
 
 <script lang="ts">

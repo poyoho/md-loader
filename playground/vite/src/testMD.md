@@ -4,14 +4,14 @@
 
 :::component component-test
 
-```html
-<component-test>
+```vue
+<component-test :test-number="2">
   <p>default slot</p>
-<component-test>
+</component-test>
 ```
 
 | pr op        | ty `p` e                     | def *ault*     | req __uire__ | comm _ent_ | asd |
-| ------------ | ---------------------------- | -------------- | ------------ | ---------- | --- |
+|--------------|------------------------------|----------------|--------------|------------|-----|
 | test-number  | number                       | 1              | true         | `comment1` | asd |
 | test-boolean | boolean                      | false          | true         | `comment2` | zxc |
 | test-string  | string                       | ggsimida       | false        | `comment3` | qwe |
@@ -58,7 +58,7 @@ const a = "12"
 bbbb
 
 | asd | bbb |
-| --- | --- |
+|-----|-----|
 | asd | bbb |
 | asd | bbb |
 | asd | bbb |
@@ -90,11 +90,11 @@ asdasdasd
 
 [Home](https://www.baidu.com)
 
-| Tables        |      Are      |  Cool |
-| :------------ | :-----------: | ----: |
+| Tables        | Are           | Cool  |
+|---------------|---------------|-------|
 | col 3 is      | right-aligned | $1600 |
-| col 2 is      |   centered    |   $12 |
-| zebra stripes |   are neat    |    $1 |
+| col 2 is      | centered      | $12   |
+| zebra stripes | are neat      | $1    |
 
 [[toc]]
 

@@ -26,6 +26,7 @@ export default html`
   </div>
 </div>
 <style>
+.define,
 .descript,
 .props {
   background: #ffffff;
@@ -45,6 +46,7 @@ export default html`
 }
 
 .define-block {
+  user-select: none;
   padding: 0;
   margin-top: 10px;
   margin-bottom: 0;

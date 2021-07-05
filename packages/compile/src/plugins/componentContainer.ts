@@ -190,6 +190,26 @@ function renderTable(
   }
 }
 
+function renderComponent(md: MarkdownIt, componentName: string, bindAttr: string, defineToken?: Token) {
+  let component = ""
+  let define: Token
+  if (defineToken) {
+    define = defineToken
+    component = defineToken.content
+      .replace(/\s/g, "")
+      .replace(`<${componentName}`, `<${componentName} v-bind='<!--component-prop: ${bindAttr} :component-prop-->'`)
+  } else {
+    define = new Token("fence", "", 0)
+    define.info = "html"
+    define.content = `<${componentName} />`
+    component = `<${componentName} v-bind='<!--component-prop: ${bindAttr} :component-prop-->' />`
+  }
+  return {
+    define: md.renderer.render([define], md.options, {}),
+    component,
+  }
+}
+
 export function ComponentContainer(
   md: MarkdownIt,
   supportTableColumn = ['prop', 'type', 'default', 'require']
@@ -210,13 +230,21 @@ export function ComponentContainer(
         )
         const tableTokens = sliceTokens(currentTokens, "table_open", "table_close")
         const table = renderTable(md, tableTokens, supportTableColumn)
-        tableTokens.forEach(token => token.type = 'component_container_block')
         // console.log("defaultValueStr", table.defaultValueStr)
+        const component = renderComponent(
+          md,
+          componentName,
+          table.defaultValueStr,
+          currentTokens.find(token => token.type === "fence")
+        )
+
+        tableTokens.forEach(token => token.type = 'component_container_block')
         return [
           `<component-block class="component-block" ref="componentBlock">`,
           `<div slot="component" class="component">`,
-          `<${componentName} v-bind='<!--component-prop: ${table.defaultValueStr} :component-prop-->' />`,
+          component.component,
           `</div>`,
+          `<div slot="define">${component.define}</div>`,
           table.html,
         ].join("")
       }
