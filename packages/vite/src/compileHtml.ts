@@ -1,5 +1,5 @@
 const demoComponentRE = /<!--element-demo: ([\S\s]+?) :element-demo-->/gm
-const componentRE = /(\bcomponentBlock\b)|<!--component-prop: ([\S\s]+?) :component-prop-->/gm
+const componentRE = /(\bcomponentBlock\b)|<!--prop: ([\S\s]+?) :prop-->|<!--emit: ([\S\s]+?) :emit-->/gm
 
 export function createHtml2VueRenderFn() {
   const cache = new Map<string, Map<string, string>>()
@@ -11,6 +11,7 @@ export function createHtml2VueRenderFn() {
       const defineSetup: string[] = []
       const onMounted: string[] = []
       const components = new Map<string, string>()
+      defineSetup.push("    let _cb = () => {}")
       const template = html
         .replace(demoComponentRE, (_, s) => {
           demoCount++
@@ -18,19 +19,26 @@ export function createHtml2VueRenderFn() {
           imports.push(`DemoComponent${demoCount}`)
           return `<DemoComponent${demoCount} />`
         })
-        .replace(componentRE, (_, s, s2) => {
-          const num = ++componentCount % 2 ? componentCount - 1 : componentCount
-          if (["componentBlock"].includes(s)) {
+        .replace(componentRE, (_, block, prop, emit) => {
+          const num = ++componentCount % 3 ? Math.floor(componentCount / 3) : componentCount
+          if (block) {
             defineSetup.push(`    const componentBlock${num} = ref()`)
             exposeProps.push(`componentBlock${num}`)
-            return `${s}${num}`
+            return `${block}${num}`
+          } else if (prop) {
+            const propName = `componentProps${num}`
+            defineSetup.push(`    const componentProps${num} = reactive(${prop})`)
+            exposeProps.push(propName)
+            return propName
+          } else if (emit) {
+            const propName = `componentEmit${num}`
+            defineSetup.push(`    const componentEmit${num} = ${emit}`)
+            // eslint-disable-next-line max-len
+            onMounted.push(`      _PCI(componentBlock${num}.value, {props:componentProps${num}, subscribe: (cb) => (_cb=cb)})`)
+            exposeProps.push(propName)
+            return propName
           }
-          console.log(s2)
-          const propName = `componentProps${num}`
-          defineSetup.push(`    const componentProps${num} = reactive(${s2})`)
-          onMounted.push(`      _PCI(componentBlock${num}.value, {props: componentProps${num}})`)
-          exposeProps.push(propName)
-          return propName
+          return ""
         })
       const fileNoExtname = filename.substring(0, filename.lastIndexOf(".md"))
       // 不能发单一文件的请求 让vue hmr保存成多个文件

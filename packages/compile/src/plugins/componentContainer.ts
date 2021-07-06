@@ -9,6 +9,7 @@ const TYPE_MAP = {
   "string": "string",
   "object": "object",
   "boolean": "boolean",
+  "function": "function"
 }
 const OPTION_SPLITE = /\|/
 
@@ -29,6 +30,7 @@ function formatType(tokenType: string) {
 }
 
 function genControler(token: ComponentToken) {
+  // console.log(token)
   let html = ""
   let options = [] as string[]
   const requireAttr = token.require === "true" ? "required" : ""
@@ -48,6 +50,9 @@ function genControler(token: ComponentToken) {
       break
     case "option":
       options = token.type.replace(/['"]/g, "").split(OPTION_SPLITE)
+      break
+    case "function":
+      html = `<div ftype="${type}" prop="${token.prop}"></div>`
       break
   }
   if (options.length) {
@@ -85,7 +90,7 @@ function genClassName(tokenType: string, value: string) {
   return `class="${tokenType}"`
 }
 
-function genDefaultValue(token: ComponentToken) {
+function genPropsDefaultValue(token: ComponentToken) {
   let val = `"${token.default}"`
   if (["number", "boolean", "object"].includes(token.type)) {
     val = token.default
@@ -97,6 +102,10 @@ function genDefaultValue(token: ComponentToken) {
   return `"${token.prop}"` + ":" + val + ","
 }
 
+function genEmitDefaultValue(token: ComponentToken) {
+  return `"${token.prop}"` + ":" + `(...args) => {console.log("${token.prop}", ...args); _cb("${token.prop}")}` + ","
+}
+
 function renderTable(
   md: MarkdownIt,
   tableTokens: Token[],
@@ -106,6 +115,7 @@ function renderTable(
   let tdKeys: string[] = []
   let collectText: string[] = []
   let defaultValueStr = ""
+  let defaultEmitStr = ""
   const UNEXPECT_CHAR = /[ ]/g
   let idx = 0
   const renderer = customRenderer(md, {
@@ -120,7 +130,12 @@ function renderTable(
     },
     // thead
     th_close: (defaultResult) => {
-      thKeys.push(collectText.join(""))
+      const key = collectText.join("")
+      if (key === "default/params") {
+        thKeys.push("default")
+      } else {
+        thKeys.push(key)
+      }
       collectText = []
       return defaultResult()
     },
@@ -153,9 +168,10 @@ function renderTable(
       tdKeys = []
       idx = 0
       const result = genControler(token)
-      const isRequire = token.require === "true" ? "require" : ""
-      if (isRequire) {
-        defaultValueStr += genDefaultValue(token)
+      if (token.require === "true") {
+        defaultValueStr += genPropsDefaultValue(token)
+      } else if ( token.type === "function") {
+        defaultEmitStr += genEmitDefaultValue(token)
       }
       return `<td class="control">${result.html}</td>`
     }
@@ -187,25 +203,32 @@ function renderTable(
       "</table>"
     ].join(""),
     defaultValueStr: `{${defaultValueStr.slice(0, defaultValueStr.length - 1)}}`,
+    defaultEmitStr: `{${defaultEmitStr.slice(0, defaultEmitStr.length - 1)}}`
   }
 }
 
-function renderComponent(md: MarkdownIt, componentName: string, bindAttr: string, defineToken?: Token) {
+function renderComponent(
+  md: MarkdownIt,
+  componentName: string,
+  bindProps: string,
+  bindEmits: string,
+  defineToken?: Token
+) {
   let component = ""
   let define: Token
+  // eslint-disable-next-line max-len
+  const tag = `<${componentName} `
+    + `v-bind='<!--prop: ${bindProps} :prop-->' `
+    + `v-on='<!--emit: ${bindEmits} :emit-->'`
   if (defineToken) {
     defineToken.content = defineToken.content.replace(new RegExp(`<${componentName}.*>`), `<${componentName}>`)
     define = defineToken
-    component = defineToken.content
-      .replace(
-        `<${componentName}`,
-        `<${componentName} v-bind='<!--component-prop: ${bindAttr} :component-prop-->'`
-      )
+    component = defineToken.content.replace( `<${componentName}`, tag)
   } else {
     define = new Token("fence", "", 0)
     define.info = "html"
     define.content = `<${componentName} />`
-    component = `<${componentName} v-bind='<!--component-prop: ${bindAttr} :component-prop-->' />`
+    component = tag + '/>'
   }
   return {
     define: md.renderer.render([define], md.options, {}),
@@ -238,6 +261,7 @@ export function ComponentContainer(
           md,
           componentName,
           table.defaultValueStr,
+          table.defaultEmitStr,
           currentTokens.find(token => token.type === "fence")
         )
 

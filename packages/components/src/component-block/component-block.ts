@@ -3,8 +3,8 @@ import teamplateElement from "./component-block-element"
 
 interface InstanceObject {
   props: Record<string, any>
+  subscribe: (cb: (prop: string) => void) => void;
 }
-
 interface State {
   instance: InstanceObject
 
@@ -63,6 +63,15 @@ function changeActive(e: Event) {
   state.activeNode = target
 }
 
+function triggerEmitAnimation(node: HTMLElement, prop: string) {
+  console.log("triggerAnimation")
+  const tableNode = node.querySelector(`.component-block td.control [ftype="function"][prop="${prop}"]`)!
+  tableNode.className = "active"
+  setTimeout(() => {
+    tableNode.className = ""
+  }, 500)
+}
+
 export default class ComponentBlockElement extends HTMLElement {
   constructor() {
     super()
@@ -80,13 +89,14 @@ export default class ComponentBlockElement extends HTMLElement {
     const defineBlock = this.defineBlock
     const descriptBlock = this.descriptBlock
 
-    const state = <any>Object.assign(states.get(this)!, {
+    const state = <State>Object.assign(states.get(this)!, {
       propsBlock,
       defineBlock,
       descriptBlock,
       activeNode: activeNode,
     })
     propsBlock.textContent = JSON.stringify(state.instance.props)
+    state.instance.subscribe((prop) => triggerEmitAnimation(table, prop))
 
     activeNode.className = "active"
     state[activeNode.getAttribute("for")! + "Block"].style.display = "block"
@@ -99,9 +109,12 @@ export default class ComponentBlockElement extends HTMLElement {
   disconnectedCallback() {
     const table = this.table!
     const nav = this.nav!
+    const state = states.get(this)!
 
+    state.instance.subscribe(() => {})
     table.removeEventListener("input", tableInput)
     nav.removeEventListener("click", changeActive)
+    states.delete(this)
   }
 
   get table() {

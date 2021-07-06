@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     aaaa
+    <button v-on="von">aa</button>
     <testMD />
   </div>
 </template>
@@ -13,6 +14,14 @@ export default defineComponent({
   name: "App",
   components: {
     testMD,
+  },
+  setup() {
+    return {
+      von:
+        {
+          click: () => {console.log("111"); console.log("22")}
+        }
+    }
   }
 })
 </script>

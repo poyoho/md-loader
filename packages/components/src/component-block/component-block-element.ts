@@ -13,7 +13,7 @@ export default html`
   <ul class="define-block">
     <li for="props" class="default">props</li>
     <li for="define">define</li>
-    <li for="descript">descript</li>
+    <li for="descript">attributes</li>
   </ul>
   <div class="props"></div>
   <div class="descript">

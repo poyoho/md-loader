@@ -70,7 +70,7 @@ export default defineComponent({
     })
 
     function click() {
-      emit("test-emit")
+      emit("test-emit", Math.random())
       data.count++
     }
 
