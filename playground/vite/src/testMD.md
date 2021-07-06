@@ -8,7 +8,7 @@
 <component-test :test-number="2">
   <p>default slot</p>
   <!-- don't change by descript -->
-  <component-test :test-number="2" />
+  <component-test :test-number="2" :test-boolean="false" test-option="qwe" :test-object="{a: 1}"/>
 </component-test>
 ```
 
