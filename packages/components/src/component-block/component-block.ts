@@ -54,7 +54,9 @@ function tableInput(e: Event) {
 function changeActive(e: Event) {
   const state = states.get(<ComponentBlockElement>getShadowHost(<HTMLElement>e.currentTarget))!
   const target = e.target as HTMLInputElement
-
+  if (target.tagName !== "LI") {
+    return
+  }
   state[state.activeNode.getAttribute("for")! + "Block"].style.display = "none"
   state[target.getAttribute("for")! + "Block"].style.display = "block"
 
@@ -64,7 +66,6 @@ function changeActive(e: Event) {
 }
 
 function triggerEmitAnimation(node: HTMLElement, prop: string) {
-  console.log("triggerAnimation")
   const tableNode = node.querySelector(`.component-block td.control [ftype="function"][prop="${prop}"]`)!
   tableNode.className = "active"
   setTimeout(() => {
