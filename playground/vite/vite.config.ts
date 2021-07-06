@@ -1,16 +1,23 @@
-import { UserConfig } from "vite"
+import vueMd from "@poyoho/md-loader-vite"
 import path from "path"
-import vueMd from "@poyoho/loader-md"
+import { defineConfig } from "vite"
 
-const viteConfig: UserConfig = {
+export default defineConfig({
   plugins: [
-    vueMd()
+    vueMd({
+      vueCompile: {
+        template: {
+          compilerOptions: {
+            isCustomElement: (tag) => ["demo-block", "component-block"].includes(tag)
+          }
+        }
+      }
+    })
   ],
   resolve: {
     alias: {
       "@": path.resolve("./src"),
     }
   }
-}
+})
 
-export default viteConfig

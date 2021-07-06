@@ -1,0 +1,31 @@
+{
+  "name": "@poyoho/md-loader-components",
+  "version": "0.0.7",
+  "description": "markdown compile",
+  "scripts": {},
+  "author": "poyoho",
+  "license": "ISC",
+  "dependencies": {},
+  "keywords": [
+    "markdown-it"
+  ],
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx,jsx,json}": [
+      "eslint --fix --ext .js,.ts,.tsx,.jsx"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "index.ts",
+  "devDependencies": {
+  }
+}

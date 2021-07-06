@@ -1,0 +1,81 @@
+.component-block td .require {
+  display: inline-block;
+  background: #CCFF99;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.component-block td .no-require {
+  display: inline-block;
+  padding: 3px;
+  background: #FF6666;
+  border-radius: 5px;
+}
+.component-block td [class^=type-] {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.component-block td .type-string {
+  background: #FFFFCC;
+}
+.component-block td .type-number {
+  background: #CCFFFF;
+}
+.component-block td .type-boolean {
+  background: #FFCCCC;
+}
+.component-block td .type-object {
+  background: #99CCCC;
+}
+.component-block td .type-option {
+  background: #CCCCFF;
+}
+.component-block td .type-function {
+  background: #edefdc;
+}
+
+.component-block td.control input,
+.component-block td.control select,
+.component-block td.control textarea {
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #dfe2e5;
+  background: transparent;
+  outline: none;
+  padding-left: 10px;
+  line-height: 20px;
+}
+
+.component-block td.control textarea:focus,
+.component-block td.control select:focus,
+.component-block td.control input:focus {
+  border: 1px solid #2cb1fd;
+  box-shadow: 0 0 3px 1px #2cb1fd;
+}
+.component-block td.control [ftype="function"] {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2cb1fd;
+}
+
+.component-block td.control .active[ftype="function"] {
+	animation: roll-in-blurred-left .5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+}
+
+@keyframes roll-in-blurred-left {
+  0% {
+    transform: translateX(0);
+    filter: blur(0px);
+  }
+  65% {
+    transform: translateX(100px);
+    filter: blur(10px);
+  }
+  100% {
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@poyoho/md-loader-vite",
+  "author": "poyoho",
+  "version": "0.0.7",
+  "description": "vite插件 markdown解析器",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "license": "ISC",
+  "lint-staged": {
+    "*.{ts,vue,tsx,jsx,json}": "eslint --fix"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^1.2.1",
+    "@vue/compiler-sfc": "^3.0.11"
+  }
+}

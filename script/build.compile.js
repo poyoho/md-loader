@@ -2,28 +2,30 @@ const path =  require("path")
 const chalk = require("chalk")
 const rollup =  require("rollup")
 const { nodeResolve } =  require("@rollup/plugin-node-resolve")
-const { terser } =  require("rollup-plugin-terser")
+// const { terser } =  require("rollup-plugin-terser")
 const commonjs =  require("rollup-plugin-commonjs")
 const json =  require("@rollup/plugin-json")
 const esbuild = require("rollup-plugin-esbuild")
 const tsc =  require("rollup-plugin-typescript2")
 const nodePolyfills = require("rollup-plugin-node-polyfills")
 const rm = require("rimraf")
-const pkg = require("../packages/compile-md/package.json")
-const deps = Object.keys(pkg.dependencies);
+const pkg = require("../packages/compile/package.json")
+const deps = Object.keys(pkg.dependencies)
 const args = require("minimist")(process.argv.slice(2))
 
-__dirname = path.join(__dirname, "../packages/compile-md/")
+__dirname = path.join(__dirname, "../packages/compile/")
+const tsconfigPath = path.join(__dirname, "tsconfig.json")
+
 let _rollup_options = (_opt) => ({
   input: {
-    input: path.join(__dirname, "lib/index.ts"),
+    input: path.join(__dirname, "src/index.ts"),
     plugins: [
       _opt.browser && nodePolyfills(),
       nodeResolve(),
       commonjs(),
       _opt.dts
         ? tsc({
-          tsconfig: path.join(__dirname, "tsconfig.json"),
+          tsconfig: tsconfigPath,
           tsconfigOverride: {
             compilerOptions: {
               emitDeclarationOnly: true,
@@ -31,7 +33,7 @@ let _rollup_options = (_opt) => ({
           }
         })
         : esbuild({
-          tsconfig: path.resolve(__dirname, "tsconfig.ts"),
+          tsconfig: tsconfigPath,
           exclude: [
             "node_modules",
             "__tests__",
@@ -42,7 +44,7 @@ let _rollup_options = (_opt) => ({
     ],
     external(id) {
     // 不打包deps的项目
-      return deps.some(k => new RegExp("^" + k).test(id));
+      return deps.some(k => new RegExp("^" + k).test(id))
     },
   },
   output: {

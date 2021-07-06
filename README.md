@@ -1,11 +1,4 @@
-# loader-md
+# md-loader
 
-vite 插件: 支持 md 格式文件编译为 vue
+markdown make website
 
-```js
-// vite.config.js
-import mdComplier from "@poyoho/loader-md";
-module.exports = {
-  plugins: [mdComplier()],
-};
-```

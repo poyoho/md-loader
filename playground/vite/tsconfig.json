@@ -15,15 +15,13 @@
     "lib": [
       "ESNext", "DOM"
     ],
-
     "allowSyntheticDefaultImports": true
   },
   "exclude": [
     "node_modules",
   ],
-  "include": [ 
+  "include": [
     "src",
     "**/*.d.ts"
-    , "../lib/component/demo-block/useRefTemplate.ts"  ]
+  ]
 }
- 

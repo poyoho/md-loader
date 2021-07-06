@@ -1,0 +1,21 @@
+{
+  "name": "@poyoho/md-loader-themes",
+  "version": "0.0.7",
+  "description": "markdown loader themes",
+  "author": "poyoho",
+  "license": "ISC",
+  "keywords": [
+    "style"
+  ],
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src"
+  ]
+}

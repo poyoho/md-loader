@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vite App</title>
+  <script type="module" src="./src/main.ts"></script>
+  <style>
+    .a {
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  <demo-block>
+    <div slot="exec">!!!exec</div>
+    <div slot="description">!!!description</div>
+    <div slot="highlight">
+      <div class="a">
+        <h1>asd</h1>
+      </div>
+    </div>
+  </demo-block>
+
+  <demo-block>
+    <div slot="exec">？？？exec</div>
+    <div slot="description">？？？description</div>
+    <div slot="highlight">
+      <div class="a">？？？highlight</div>
+    </div>
+  </demo-block>
+</body>
+</html>
