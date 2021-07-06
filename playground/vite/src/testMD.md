@@ -19,7 +19,8 @@
 | test-string  |           string            | ggsimida            | false        | `comment3` |
 | test-option  | "asd" \| "zxc" \| "qwe"\| 1 | 1                   | true         | `comment4` |
 | test-object  |           object            | {a: "b", c: 1}      | true         | `comment5` |
-| test-emit    |          function           | (event: Event)      |              | `comment6` |
+| test-emit    |          function           | (random: number)    |              | `comment6` |
+| test-emit2   |          function           | (random: number)    |              | `comment6` |
 
 :::
 

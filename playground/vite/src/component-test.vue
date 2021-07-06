@@ -35,7 +35,7 @@ import { defineComponent, reactive, PropType } from "vue"
 
 export default defineComponent({
   name: "component-test",
-  emits: ["test-emit"],
+  emits: ["test-emit", "test-emit2"],
   props: {
     testNumber: {
       type: Number,
@@ -71,6 +71,7 @@ export default defineComponent({
 
     function click() {
       emit("test-emit", Math.random())
+      emit("test-emit2", Math.random())
       data.count++
     }
 
