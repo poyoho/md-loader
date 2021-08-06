@@ -1,11 +1,9 @@
-import ComponentBlockElement from "./src/component-block/component-block"
-import DemoBlockElement from "./src/demo-block/demo-block"
+import * as ComponentBlockElement from "./src/component-block"
+import * as DemoBlock from "./src/demo-block"
 
-export * from "./src/component-block/component-block"
-
-export default function install() {
-  window.customElements.define("demo-block", DemoBlockElement)
-  window.customElements.define("component-block", ComponentBlockElement)
+export default function install () {
+  ComponentBlockElement.install()
+  DemoBlock.install()
 }
 
 export function isCustomElement(tag: string) {

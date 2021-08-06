@@ -5,7 +5,9 @@
   "scripts": {},
   "author": "poyoho",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "monaco-editor": "^0.26.1"
+  },
   "keywords": [
     "markdown-it"
   ],
@@ -26,6 +28,5 @@
     "dist"
   ],
   "main": "index.ts",
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
