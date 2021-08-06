@@ -9,6 +9,10 @@
     .a {
       background: #000;
     }
+    .editor {
+      width: 1000px;
+      height: 500px;
+    }
   </style>
 </head>
 <body>
@@ -21,5 +25,13 @@
       </div>
     </div>
   </demo-block>
+
+  <code-editor lang="js" class="editor"></code-editor>
 </body>
+<script>
+  const elm = document.querySelector(".editor")
+  elm.addEventListener("change", (e) => {
+    console.log(e.srcElement.value)
+  })
+</script>
 </html>
