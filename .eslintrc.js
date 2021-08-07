@@ -18,6 +18,7 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": "off",
     "max-params": "off",
     "@typescript-eslint/ban-types": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "complexity": "off"
   }
 }

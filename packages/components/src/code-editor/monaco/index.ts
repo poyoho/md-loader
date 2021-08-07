@@ -13,11 +13,15 @@ export async function setupMonaco () {
 
   const [
     { default: EditorWorker },
+    { default: JSONWorker },
     { default: TsWorker },
+    { default: CSSWorker },
   ] = await Promise.all([
-    // TODO 不要使用vite的功能
+    // TODO 改成rollup引入worker方式 因为最后会使用rollup打包
     import('monaco-editor/esm/vs/editor/editor.worker?worker' as any),
+    import('monaco-editor/esm/vs/language/json/json.worker?worker' as any),
     import('monaco-editor/esm/vs/language/typescript/ts.worker?worker' as any),
+    import('monaco-editor/esm/vs/language/css/css.worker?worker'),
   ])
 
   monaco.editor.defineTheme('dark', await import("./dark.json") as any)
@@ -27,14 +31,40 @@ export async function setupMonaco () {
   // @ts-ignore
   window.MonacoEnvironment = {
     getWorker(_: any, label: string) {
+      if (label === 'json') {
+        return new JSONWorker()
+      }
+      // if (label === 'html' || label === 'handlebars' || label === 'razor') {
+      //   return new HtmlWorker()
+      // }
       if (label === 'typescript' || label === 'javascript') {
         return new TsWorker()
       }
+      if (label === 'css') {
+        return new CSSWorker()
+      }
+
       return new EditorWorker()
     },
   }
 
-  return { monaco }
+  const packages = new Set<string>()
+
+  return {
+    monaco,
+    addPackages (pack: string) {
+      if (packages.has(pack)) {
+        return
+      }
+      packages.add(pack)
+      monaco.languages.typescript.javascriptDefaults.addExtraLib(`
+        declare module '${pack}' {
+          let x: any;
+          export = x;
+        }
+      `, pack)
+    }
+  }
 }
 
 export default setupMonaco

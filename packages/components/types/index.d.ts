@@ -5,3 +5,7 @@ declare module '*?worker' {
   }
   export default workerConstructor
 }
+
+declare module 'monaco-editor-core/esm/vs/editor/editor.worker' {
+  export function initialize(foreignModule: any): void;
+}
