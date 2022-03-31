@@ -1,7 +1,7 @@
 {
   "compileOnSave": true,
   "include": [
-    "src",
+    "src", "../plugin/src/component/componentContainer.ts", "../plugin/src/demo/demoContainer.ts",
   ],
   "extends": "../../tsconfig.base.json"
 }

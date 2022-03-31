@@ -1,7 +1,7 @@
-import ComponentBlockElement from "./src/component-block/component-block"
-import DemoBlockElement from "./src/demo-block/demo-block"
+import ComponentBlockElement from "./src/component/component-block/component-block"
+import DemoBlockElement from "./src/demo/demo-block/demo-block"
 
-export * from "./src/component-block/component-block"
+export * from "./src/component/component-block/component-block"
 
 export default function install() {
   window.customElements.define("demo-block", DemoBlockElement)

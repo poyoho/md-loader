@@ -3,9 +3,7 @@ import anchor from "markdown-it-anchor"
 import emoji from "markdown-it-emoji"
 import toc from "markdown-it-table-of-contents"
 
-import { ComponentContainer } from "./plugins/componentContainer"
 import { containerPlugin } from "./plugins/containers"
-import { DemoContainer } from "./plugins/demoContainer"
 import { highlight } from "./plugins/highlight"
 import { highlightLinePlugin } from "./plugins/highlightLines"
 import { lineNumberPlugin } from "./plugins/lineNumbers"
@@ -31,8 +29,6 @@ export interface MarkdownOptions extends MarkdownIt.Options {
   toc?: any
   externalLinks?: Record<string, string>,
   modules?: {
-    demo?: boolean
-    component?: boolean
     snippet?: boolean
   },
 }
@@ -93,14 +89,6 @@ export const createMarkdownRenderer = (
 
   if (options.lineNumbers) {
     md.use(lineNumberPlugin)
-  }
-
-  if (options.modules?.demo) {
-    md.use(DemoContainer)
-  }
-
-  if (options.modules?.component) {
-    md.use(ComponentContainer)
   }
 
   // wrap render so that we can return both the html and extracted data.

@@ -1,8 +1,4 @@
-function html(...args: any) {
-  return args
-}
-
-export default html`
+export default /* html */`
 <div class="demo-block">
   <!-- 代码执行ui -->
   <div class="exec">

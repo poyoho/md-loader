@@ -1,3 +1,3 @@
-import MdLoaderComponent from "@poyoho/md-loader-components"
+import MdLoaderComponent from "@poyoho/md-loader-plugins"
 
 MdLoaderComponent.install()

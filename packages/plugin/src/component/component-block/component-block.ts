@@ -1,4 +1,4 @@
-import { getShadowHost } from "../utils/shadow"
+import { getShadowHost } from "../../utils/shadow"
 import teamplateElement from "./component-block-element"
 
 interface InstanceObject {

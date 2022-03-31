@@ -44,7 +44,6 @@ export default function createVueMarkDownPlugin(opts: VueMarkdownOptions = {}) {
       }
       if (!query.component) {
         const html = md.render(code)
-        // console.log("transform", filename, query, id)
         return template.render(html.html, filename)
       }
     },

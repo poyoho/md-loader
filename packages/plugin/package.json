@@ -1,5 +1,5 @@
 {
-  "name": "@poyoho/md-loader-components",
+  "name": "@poyoho/md-loader-plugins",
   "version": "0.0.7",
   "description": "markdown compile",
   "scripts": {},

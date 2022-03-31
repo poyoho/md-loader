@@ -1,4 +1,4 @@
-import { getShadowHost } from "../utils/shadow"
+import { getShadowHost } from "../../utils/shadow"
 import teamplateElement from "./demo-block-element"
 
 interface State {

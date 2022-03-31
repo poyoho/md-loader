@@ -1,8 +1,4 @@
-function html(...args: any) {
-  return args
-}
-
-export default html`
+export default /* html */`
 <div class="component-block">
   <!-- component -->
   <div class="component">
